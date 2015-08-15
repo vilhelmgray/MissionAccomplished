@@ -16,16 +16,16 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
+#ifndef SIMPLEDIRECTLAYER_H
+#define SIMPLEDIRECTLAYER_H
 
-#include "SimpleDirectLayer.h"
-
-int main(){
-	try{
-		SimpleDirectLayer sdl;
-	}catch(const std::exception& e){
-		std::cerr << "Error: " << e.what() << '\n';
-	}
-
-	return 0;
+struct SimpleDirectLayer{
+	SimpleDirectLayer();
+	~SimpleDirectLayer();
+	SimpleDirectLayer(const SimpleDirectLayer&) = delete;
+	SimpleDirectLayer& operator=(const SimpleDirectLayer&) = delete;
+	SimpleDirectLayer(SimpleDirectLayer&&) = delete;
+	SimpleDirectLayer& operator=(SimpleDirectLayer&&) = delete;
 }
+
+#endif

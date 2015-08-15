@@ -16,16 +16,18 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <iostream>
+#include <stdexcept>
+
+#include "SDL.h"
 
 #include "SimpleDirectLayer.h"
 
-int main(){
-	try{
-		SimpleDirectLayer sdl;
-	}catch(const std::exception& e){
-		std::cerr << "Error: " << e.what() << '\n';
+SimpleDirectLayer::SimpleDirectLayer(){
+	if(SDL_Init(SDL_INIT_VIDEO)){
+		throw std::runtime_error(SDL_GetError());
 	}
+}
 
-	return 0;
+SimpleDirectLayer::~SimpleDirectLayer(){
+	SDL_Quit();
 }

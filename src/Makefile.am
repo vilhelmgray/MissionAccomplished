@@ -17,4 +17,5 @@
 ## <http://www.gnu.org/licenses/>.
 
 bin_PROGRAMS = MissionAccomplished
-MissionAccomplished_SOURCES = MissionAccomplished.cpp
+MissionAccomplished_SOURCES = MissionAccomplished.cpp SimpleDirectLayer.cpp
+MissionAccomplished_SOURCES += SimpleDirectLayer.h
