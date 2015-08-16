@@ -22,6 +22,7 @@
 struct SimpleDirectLayer{
 	SimpleDirectLayer();
 	~SimpleDirectLayer();
+
 	SimpleDirectLayer(const SimpleDirectLayer&) = delete;
 	SimpleDirectLayer& operator=(const SimpleDirectLayer&) = delete;
 	SimpleDirectLayer(SimpleDirectLayer&&) = delete;

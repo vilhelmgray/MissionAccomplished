@@ -16,18 +16,18 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <stdexcept>
+#ifndef WORLD_H
+#define WORLD_H
 
-#include "SDL.h"
-
+#include "SDL_WindRend.h"
 #include "SimpleDirectLayer.h"
 
-SimpleDirectLayer::SimpleDirectLayer(){
-	if(SDL_Init(SDL_INIT_VIDEO) < 0){
-		throw std::runtime_error(SDL_GetError());
-	}
-}
+class World{
+		SimpleDirectLayer sdl;
+		SDL_WindRend windrend;
 
-SimpleDirectLayer::~SimpleDirectLayer(){
-	SDL_Quit();
-}
+	public:
+		World();
+};
+
+#endif

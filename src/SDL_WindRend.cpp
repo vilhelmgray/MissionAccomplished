@@ -20,14 +20,16 @@
 
 #include "SDL.h"
 
-#include "SimpleDirectLayer.h"
+#include "SDL_WindRend.h"
 
-SimpleDirectLayer::SimpleDirectLayer(){
-	if(SDL_Init(SDL_INIT_VIDEO) < 0){
+SDL_WindRend::SDL_WindRend(){
+	int retval = SDL_CreateWindowAndRenderer(0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP, &window, &renderer);
+	if(retval == -1){
 		throw std::runtime_error(SDL_GetError());
 	}
 }
 
-SimpleDirectLayer::~SimpleDirectLayer(){
-	SDL_Quit();
+SDL_WindRend::~SDL_WindRend(){
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 }

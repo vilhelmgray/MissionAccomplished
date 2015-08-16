@@ -18,11 +18,11 @@
  */
 #include <iostream>
 
-#include "SimpleDirectLayer.h"
+#include "World.h"
 
 int main(){
 	try{
-		SimpleDirectLayer sdl;
+		World world;
 	}catch(const std::exception& e){
 		std::cerr << "Error: " << e.what() << '\n';
 	}

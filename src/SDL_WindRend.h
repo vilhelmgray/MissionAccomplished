@@ -16,18 +16,24 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <stdexcept>
+#ifndef SDL_WINDREND_H
+#define SDL_WINDREND_H
 
 #include "SDL.h"
 
-#include "SimpleDirectLayer.h"
+class SDL_WindRend{
+		SDL_Window *window;
 
-SimpleDirectLayer::SimpleDirectLayer(){
-	if(SDL_Init(SDL_INIT_VIDEO) < 0){
-		throw std::runtime_error(SDL_GetError());
-	}
-}
+	public:
+		SDL_Renderer *renderer;
 
-SimpleDirectLayer::~SimpleDirectLayer(){
-	SDL_Quit();
-}
+		SDL_WindRend();
+		~SDL_WindRend();
+
+		SDL_WindRend(const SDL_WindRend&) = delete;
+		SDL_WindRend& operator=(const SDL_WindRend&) = delete;
+		SDL_WindRend(SDL_WindRend&&) = delete;
+		SDL_WindRend& operator=(SDL_WindRend&&) = delete;
+};
+
+#endif

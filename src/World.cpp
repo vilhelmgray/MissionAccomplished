@@ -20,14 +20,14 @@
 
 #include "SDL.h"
 
-#include "SimpleDirectLayer.h"
+#include "World.h"
 
-SimpleDirectLayer::SimpleDirectLayer(){
-	if(SDL_Init(SDL_INIT_VIDEO) < 0){
+World::World(){
+	if(SDL_ShowCursor(SDL_DISABLE) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
-}
 
-SimpleDirectLayer::~SimpleDirectLayer(){
-	SDL_Quit();
+	if(SDL_SetRenderDrawColor(windrend.renderer, 0, 0, 0, 255) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
 }
