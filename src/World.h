@@ -26,8 +26,13 @@ class World{
 		SimpleDirectLayer sdl;
 		SDL_WindRend windrend;
 
+		void draw();
+		bool handleEvents();
+
 	public:
 		World();
+
+		bool tick();
 };
 
 #endif

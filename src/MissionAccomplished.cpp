@@ -19,11 +19,25 @@
 #include <exception>
 #include <iostream>
 
+#include "SDL.h"
+
 #include "World.h"
 
 int main(){
 	try{
 		World world;
+
+		Uint32 lastFrame = 0;
+		while(true){
+			Uint32 currFrame = SDL_GetTicks();
+			if(currFrame - lastFrame > 16){
+				lastFrame = currFrame;
+
+				if(world.tick()){
+					break;
+				}
+			}
+		}
 	}catch(const std::exception& e){
 		std::cerr << "Error: " << e.what() << '\n';
 	}

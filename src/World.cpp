@@ -35,3 +35,39 @@ World::World(){
 		throw std::runtime_error(SDL_GetError());
 	}
 }
+
+void World::draw(){
+	if(SDL_RenderClear(windrend.renderer) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+
+	SDL_RenderPresent(windrend.renderer);
+}
+
+bool World::handleEvents(){
+	SDL_Event event;
+	while(SDL_PollEvent(&event)){
+		switch(event.type){
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_ESCAPE:
+						return true;
+				}
+				break;
+			case SDL_QUIT:
+				return true;
+		}
+	}
+
+	return false;
+}
+
+bool World::tick(){
+	if(handleEvents()){
+		return true;
+	}
+
+	draw();
+
+	return false;
+}
