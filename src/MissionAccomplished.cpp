@@ -16,6 +16,7 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <exception>
 #include <iostream>
 
 #include "World.h"
