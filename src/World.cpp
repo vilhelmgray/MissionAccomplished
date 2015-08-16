@@ -27,6 +27,10 @@ World::World(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
+	if(SDL_RenderSetLogicalSize(windrend.renderer, 640, 480) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+
 	if(SDL_SetRenderDrawColor(windrend.renderer, 0, 0, 0, 255) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
