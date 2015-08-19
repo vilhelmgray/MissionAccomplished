@@ -16,8 +16,8 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef SDL_WINDREND_H
-#define SDL_WINDREND_H
+#ifndef WINDREND_H
+#define WINDREND_H
 
 #include "SDL.h"
 
