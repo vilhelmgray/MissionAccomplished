@@ -19,6 +19,7 @@
 #include <stdexcept>
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "World.h"
 
@@ -34,10 +35,16 @@ World::World(){
 	if(SDL_SetRenderDrawColor(windrend.renderer, 0, 0, 0, 255) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
+
+	loadFiles();
 }
 
 void World::draw(){
 	if(SDL_RenderClear(windrend.renderer) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+
+	if(SDL_RenderCopy(windrend.renderer, entities.begin()->texture, NULL, NULL) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
@@ -60,6 +67,23 @@ bool World::handleEvents(){
 	}
 
 	return false;
+}
+
+void World::loadFiles(){
+	if((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG){
+		throw std::runtime_error(IMG_GetError());
+	}
+
+	SDL_Surface *tmpSurf = IMG_Load("background.png");
+	if(!tmpSurf){
+		throw std::runtime_error(IMG_GetError());
+	}
+
+	entities.emplace_front(windrend.renderer, tmpSurf, 640, 480);
+
+	SDL_FreeSurface(tmpSurf);
+
+	IMG_Quit();
 }
 
 bool World::tick(){

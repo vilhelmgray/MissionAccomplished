@@ -16,28 +16,24 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef SPRITE_H
+#define SPRITE_H
 
-#include <forward_list>
+#include "SDL.h"
 
-#include "Sprite.h"
-#include "SDL_WindRend.h"
-#include "SimpleDirectLayer.h"
-
-class World{
-		std::forward_list<Sprite> entities;
-		SimpleDirectLayer sdl;
-		SDL_WindRend windrend;
-
-		void draw();
-		bool handleEvents();
-		void loadFiles();
+class Sprite{
+		SDL_Rect dimensions;
 
 	public:
-		World();
+		SDL_Texture *texture;
 
-		bool tick();
+		Sprite(SDL_Renderer *renderer, SDL_Surface *surface, const int W, const int H);
+		~Sprite();
+
+		Sprite(const Sprite&) = delete;
+		Sprite& operator=(const Sprite&) = delete;
+		Sprite(Sprite&&) = delete;
+		Sprite& operator=(Sprite&&) = delete;
 };
 
 #endif

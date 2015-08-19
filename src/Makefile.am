@@ -17,5 +17,5 @@
 ## <http://www.gnu.org/licenses/>.
 
 bin_PROGRAMS = MissionAccomplished
-MissionAccomplished_SOURCES = MissionAccomplished.cpp SDL_WindRend.cpp SimpleDirectLayer.cpp World.cpp
-MissionAccomplished_SOURCES += SDL_WindRend.h SimpleDirectLayer.h World.h
+MissionAccomplished_SOURCES = MissionAccomplished.cpp SDL_WindRend.cpp SimpleDirectLayer.cpp Sprite.cpp World.cpp
+MissionAccomplished_SOURCES += SDL_WindRend.h SimpleDirectLayer.h Sprite.h World.h

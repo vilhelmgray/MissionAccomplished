@@ -16,28 +16,24 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WORLD_H
-#define WORLD_H
+#include <stdexcept>
 
-#include <forward_list>
+#include "SDL.h"
 
 #include "Sprite.h"
-#include "SDL_WindRend.h"
-#include "SimpleDirectLayer.h"
 
-class World{
-		std::forward_list<Sprite> entities;
-		SimpleDirectLayer sdl;
-		SDL_WindRend windrend;
+Sprite::Sprite(SDL_Renderer *renderer, SDL_Surface *surface, const int W, const int H){
+	dimensions.x = 0;
+	dimensions.y = 0;
+	dimensions.w = W;
+	dimensions.h = H;
 
-		void draw();
-		bool handleEvents();
-		void loadFiles();
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	if(!texture){
+		throw std::runtime_error(SDL_GetError());
+	}
+}
 
-	public:
-		World();
-
-		bool tick();
-};
-
-#endif
+Sprite::~Sprite(){
+	SDL_DestroyTexture(texture);
+}
