@@ -22,13 +22,13 @@
 #include <forward_list>
 
 #include "Sprite.h"
-#include "SDL_WindRend.h"
 #include "SimpleDirectLayer.h"
+#include "WindRend.h"
 
 class World{
 		std::forward_list<Sprite> entities;
 		SimpleDirectLayer sdl;
-		SDL_WindRend windrend;
+		WindRend windrend;
 
 		void draw();
 		bool handleEvents();

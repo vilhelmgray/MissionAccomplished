@@ -16,24 +16,20 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef SDL_WINDREND_H
-#define SDL_WINDREND_H
+#include <stdexcept>
 
 #include "SDL.h"
 
-class SDL_WindRend{
-		SDL_Window *window;
+#include "WindRend.h"
 
-	public:
-		SDL_Renderer *renderer;
+WindRend::WindRend(){
+	int retval = SDL_CreateWindowAndRenderer(0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP, &window, &renderer);
+	if(retval == -1){
+		throw std::runtime_error(SDL_GetError());
+	}
+}
 
-		SDL_WindRend();
-		~SDL_WindRend();
-
-		SDL_WindRend(const SDL_WindRend&) = delete;
-		SDL_WindRend& operator=(const SDL_WindRend&) = delete;
-		SDL_WindRend(SDL_WindRend&&) = delete;
-		SDL_WindRend& operator=(SDL_WindRend&&) = delete;
-};
-
-#endif
+WindRend::~WindRend(){
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+}
