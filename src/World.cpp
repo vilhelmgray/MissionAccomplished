@@ -74,14 +74,7 @@ void World::loadFiles(){
 		throw std::runtime_error(IMG_GetError());
 	}
 
-	SDL_Surface *tmpSurf = IMG_Load("background.png");
-	if(!tmpSurf){
-		throw std::runtime_error(IMG_GetError());
-	}
-
-	entities.emplace_front(windrend.renderer, tmpSurf, 640, 480);
-
-	SDL_FreeSurface(tmpSurf);
+	entities.emplace_front(windrend.renderer, "background.png", 640, 480);
 
 	IMG_Quit();
 }

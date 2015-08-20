@@ -19,25 +19,17 @@
 #include <stdexcept>
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "Surface.h"
 
-#include "Sprite.h"
-
-Sprite::Sprite(SDL_Renderer *renderer, const char *file, const int W, const int H){
-	dimensions.x = 0;
-	dimensions.y = 0;
-	dimensions.w = W;
-	dimensions.h = H;
-
-	Surface s(file);
-
-	texture = SDL_CreateTextureFromSurface(renderer, s.surface);
-	if(!texture){
-		throw std::runtime_error(SDL_GetError());
+Surface::Surface(const char *file){
+	surface = IMG_Load(file);
+	if(!surface){
+		throw std::runtime_error(IMG_GetError());
 	}
 }
 
-Sprite::~Sprite(){
-	SDL_DestroyTexture(texture);
+Surface::~Surface(){
+	SDL_FreeSurface(surface);
 }

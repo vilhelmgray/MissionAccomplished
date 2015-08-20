@@ -27,7 +27,7 @@ class Sprite{
 	public:
 		SDL_Texture *texture;
 
-		Sprite(SDL_Renderer *renderer, SDL_Surface *surface, const int W, const int H);
+		Sprite(SDL_Renderer *renderer, const char *file, const int W, const int H);
 		~Sprite();
 
 		Sprite(const Sprite&) = delete;

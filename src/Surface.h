@@ -16,28 +16,21 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <stdexcept>
+#ifndef SURFACE_H
+#define SURFACE_H
 
 #include "SDL.h"
 
-#include "Surface.h"
+struct Surface{
+	SDL_Surface *surface;
 
-#include "Sprite.h"
+	Surface(const char *file);
+	~Surface();
 
-Sprite::Sprite(SDL_Renderer *renderer, const char *file, const int W, const int H){
-	dimensions.x = 0;
-	dimensions.y = 0;
-	dimensions.w = W;
-	dimensions.h = H;
+	Surface(const Surface&) = delete;
+	Surface& operator=(const Surface&) = delete;
+	Surface(Surface&&) = delete;
+	Surface& operator=(Surface&&) = delete;
+};
 
-	Surface s(file);
-
-	texture = SDL_CreateTextureFromSurface(renderer, s.surface);
-	if(!texture){
-		throw std::runtime_error(SDL_GetError());
-	}
-}
-
-Sprite::~Sprite(){
-	SDL_DestroyTexture(texture);
-}
+#endif
