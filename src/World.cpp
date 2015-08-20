@@ -19,8 +19,8 @@
 #include <stdexcept>
 
 #include "SDL.h"
-#include "SDL_image.h"
 
+#include "ImageSystem.h"
 #include "Sprite.h"
 
 #include "World.h"
@@ -72,13 +72,9 @@ bool World::handleEvents(){
 }
 
 void World::loadFiles(){
-	if((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG){
-		throw std::runtime_error(IMG_GetError());
-	}
+	ImageSystem imgsys;
 
 	entities.emplace_front(new Sprite(windrend.renderer, "background.png", 640, 480));
-
-	IMG_Quit();
 }
 
 bool World::tick(){
