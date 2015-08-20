@@ -19,14 +19,15 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include <forward_list>
+#include <list>
+#include <memory>
 
 #include "Sprite.h"
 #include "SimpleDirectLayer.h"
 #include "WindRend.h"
 
 class World{
-		std::forward_list<Sprite> entities;
+		std::list<std::unique_ptr<Sprite>> entities;
 		SimpleDirectLayer sdl;
 		WindRend windrend;
 

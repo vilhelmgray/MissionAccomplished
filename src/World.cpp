@@ -21,6 +21,8 @@
 #include "SDL.h"
 #include "SDL_image.h"
 
+#include "Sprite.h"
+
 #include "World.h"
 
 World::World(){
@@ -44,7 +46,7 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	if(SDL_RenderCopy(windrend.renderer, entities.begin()->texture, NULL, NULL) < 0){
+	if(SDL_RenderCopy(windrend.renderer, entities.front()->texture, NULL, NULL) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
@@ -74,7 +76,7 @@ void World::loadFiles(){
 		throw std::runtime_error(IMG_GetError());
 	}
 
-	entities.emplace_front(windrend.renderer, "background.png", 640, 480);
+	entities.emplace_front(new Sprite(windrend.renderer, "background.png", 640, 480));
 
 	IMG_Quit();
 }
