@@ -17,6 +17,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include <stdexcept>
+#include <memory>
 
 #include "SDL.h"
 
@@ -46,7 +47,7 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	if(SDL_RenderCopy(windrend.renderer, entities.front()->texture, NULL, NULL) < 0){
+	if(SDL_RenderCopy(windrend.renderer, background->texture, NULL, NULL) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
@@ -74,7 +75,7 @@ bool World::handleEvents(){
 void World::loadFiles(){
 	ImageSystem imgsys;
 
-	entities.emplace_front(new Sprite(windrend.renderer, "background.png", 640, 480));
+	background = std::unique_ptr<Sprite>(new Sprite(windrend.renderer, "background.png", 640, 480));
 }
 
 bool World::tick(){

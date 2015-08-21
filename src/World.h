@@ -19,7 +19,6 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include <list>
 #include <memory>
 
 #include "Sprite.h"
@@ -27,7 +26,7 @@
 #include "WindRend.h"
 
 class World{
-		std::list<std::unique_ptr<Sprite>> entities;
+		std::unique_ptr<Sprite> background;
 		SimpleDirectLayer sdl;
 		WindRend windrend;
 
