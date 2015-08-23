@@ -16,24 +16,21 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef TEXTURE_H
+#define TEXTURE_H
 
 #include "SDL.h"
 
-class Sprite{
-		SDL_Rect dimensions;
+struct Texture{
+	SDL_Texture *texture;
 
-	public:
-		SDL_Texture *texture;
+	Texture(SDL_Renderer *renderer, const char *file);
+	~Texture();
 
-		Sprite(SDL_Renderer *renderer, const char *file, const int W, const int H);
-		~Sprite();
-
-		Sprite(const Sprite&) = delete;
-		Sprite& operator=(const Sprite&) = delete;
-		Sprite(Sprite&&) = delete;
-		Sprite& operator=(Sprite&&) = delete;
+	Texture(const Texture&) = delete;
+	Texture& operator=(const Texture&) = delete;
+	Texture(Texture&&) = delete;
+	Texture& operator=(Texture&&) = delete;
 };
 
 #endif

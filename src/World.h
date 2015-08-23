@@ -21,14 +21,15 @@
 
 #include <memory>
 
-#include "Sprite.h"
 #include "SimpleDirectLayer.h"
+#include "Texture.h"
 #include "WindRend.h"
 
 class World{
-		std::unique_ptr<Sprite> background;
 		SimpleDirectLayer sdl;
 		WindRend windrend;
+
+		std::unique_ptr<Texture> background;
 
 		void draw();
 		bool handleEvents();

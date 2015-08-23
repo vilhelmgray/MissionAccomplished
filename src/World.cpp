@@ -22,7 +22,7 @@
 #include "SDL.h"
 
 #include "ImageSystem.h"
-#include "Sprite.h"
+#include "Texture.h"
 
 #include "World.h"
 
@@ -75,7 +75,7 @@ bool World::handleEvents(){
 void World::loadFiles(){
 	ImageSystem imgsys;
 
-	background = std::unique_ptr<Sprite>(new Sprite(windrend.renderer, "background.png", 640, 480));
+	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, "background.png"));
 }
 
 bool World::tick(){

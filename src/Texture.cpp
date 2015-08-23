@@ -22,14 +22,9 @@
 
 #include "Surface.h"
 
-#include "Sprite.h"
+#include "Texture.h"
 
-Sprite::Sprite(SDL_Renderer *renderer, const char *file, const int W, const int H){
-	dimensions.x = 0;
-	dimensions.y = 0;
-	dimensions.w = W;
-	dimensions.h = H;
-
+Texture::Texture(SDL_Renderer *renderer, const char *file){
 	Surface s(file);
 
 	texture = SDL_CreateTextureFromSurface(renderer, s.surface);
@@ -38,6 +33,6 @@ Sprite::Sprite(SDL_Renderer *renderer, const char *file, const int W, const int 
 	}
 }
 
-Sprite::~Sprite(){
+Texture::~Texture(){
 	SDL_DestroyTexture(texture);
 }
