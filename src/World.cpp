@@ -21,6 +21,7 @@
 
 #include "SDL.h"
 
+#include "Entity.h"
 #include "ImageSystem.h"
 #include "Texture.h"
 
@@ -51,6 +52,8 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
+	entities.front()->draw(windrend.renderer);
+
 	SDL_RenderPresent(windrend.renderer);
 }
 
@@ -76,6 +79,8 @@ void World::loadFiles(){
 	ImageSystem imgsys;
 
 	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, "background.png"));
+
+	entities.emplace_front(new Entity(windrend.renderer, "tile.png"));
 }
 
 bool World::tick(){

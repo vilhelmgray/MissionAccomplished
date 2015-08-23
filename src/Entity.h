@@ -16,33 +16,24 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
-#include <list>
 #include <memory>
 
-#include "Entity.h"
-#include "SimpleDirectLayer.h"
+#include "SDL.h"
+
 #include "Texture.h"
-#include "WindRend.h"
 
-class World{
-		SimpleDirectLayer sdl;
-		WindRend windrend;
-
-		std::unique_ptr<Texture> background;
-
-		std::list<std::unique_ptr<Entity>> entities;
-
-		void draw();
-		bool handleEvents();
-		void loadFiles();
+class Entity{
+		std::unique_ptr<Texture> tex;
+		SDL_Rect sprite;
+		SDL_Rect position;
 
 	public:
-		World();
+		Entity(SDL_Renderer *renderer, const char *file);
 
-		bool tick();
+		void draw(SDL_Renderer *renderer);
 };
 
 #endif
