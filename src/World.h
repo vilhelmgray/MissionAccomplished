@@ -19,8 +19,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include <list>
 #include <memory>
+#include <vector>
 
 #include "Entity.h"
 #include "SimpleDirectLayer.h"
@@ -33,7 +33,7 @@ class World{
 
 		std::unique_ptr<Texture> background;
 
-		std::list<std::unique_ptr<Entity>> entities;
+		std::vector<std::unique_ptr<Entity>> entities;
 
 		void draw();
 		bool handleEvents();

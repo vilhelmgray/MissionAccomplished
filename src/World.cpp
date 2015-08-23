@@ -52,7 +52,9 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	entities.front()->draw(windrend.renderer);
+	for(unsigned i = 0; i < entities.size(); i++){
+		entities[i]->draw(windrend.renderer);
+	}
 
 	SDL_RenderPresent(windrend.renderer);
 }
@@ -80,7 +82,7 @@ void World::loadFiles(){
 
 	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, "background.png"));
 
-	entities.emplace_front(new Entity(windrend.renderer, "tile.png"));
+	entities.emplace_back(new Entity(windrend.renderer, "tile.png"));
 }
 
 bool World::tick(){
