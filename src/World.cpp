@@ -52,8 +52,8 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	for(unsigned i = 0; i < entities.size(); i++){
-		entities[i]->draw(windrend.renderer);
+	for(std::unique_ptr<Entity>& entity : entities){
+		entity->draw(windrend.renderer);
 	}
 
 	SDL_RenderPresent(windrend.renderer);
