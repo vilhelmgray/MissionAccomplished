@@ -52,7 +52,7 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	for(std::unique_ptr<Entity>& entity : entities){
+	for(auto& entity : entities){
 		entity->draw(windrend.renderer);
 	}
 
