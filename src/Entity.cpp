@@ -23,7 +23,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(SDL_Renderer *renderer, const char *file){
+Entity::Entity(SDL_Renderer *renderer, const char *file, const unsigned X, const unsigned Y){
 	tex = std::unique_ptr<Texture>(new Texture(renderer, file));
 
 	sprite.x = 0;
@@ -31,8 +31,8 @@ Entity::Entity(SDL_Renderer *renderer, const char *file){
 	sprite.w = 32;
 	sprite.h = 32;
 
-	position.x = 320;
-	position.y = 240;
+	position.x = X;
+	position.y = Y;
 	position.w = 32;
 	position.h = 32;
 }

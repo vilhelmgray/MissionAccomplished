@@ -31,7 +31,7 @@ class Entity{
 		SDL_Rect position;
 
 	public:
-		Entity(SDL_Renderer *renderer, const char *file);
+		Entity(SDL_Renderer *renderer, const char *file, const unsigned X, const unsigned Y);
 
 		void draw(SDL_Renderer *renderer);
 };
