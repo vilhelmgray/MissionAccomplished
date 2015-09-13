@@ -16,8 +16,10 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <stdexcept>
+#include <fstream>
 #include <memory>
+#include <stdexcept>
+#include <string>
 
 #include "SDL.h"
 
@@ -26,24 +28,6 @@
 #include "Texture.h"
 
 #include "World.h"
-
-const unsigned CHUNK[15][20] = {
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
-};
 
 World::World(){
 	if(SDL_ShowCursor(SDL_DISABLE) < 0){
@@ -96,14 +80,39 @@ bool World::handleEvents(){
 }
 
 void World::loadFiles(){
-	ImageSystem imgsys;
+	std::ifstream mapFile;
+	mapFile.exceptions(mapFile.failbit | mapFile.badbit);
 
-	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, "background.png"));
+	mapFile.open("level1.map");
+
+	std::string bgFilePath;
+	mapFile >> bgFilePath;
+
+	ImageSystem imgsys;
+	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, bgFilePath.c_str()));
+
+	unsigned numTiles;
+	mapFile >> numTiles;
+	for(unsigned i = 0; i < numTiles; i++){
+		std::string tileFilePath;
+		mapFile >> tileFilePath;
+
+		tiles.emplace_back(tileFilePath);
+	}
+
+	for(auto& y : chunk ){
+		for(auto& x : y){
+			mapFile >> x;
+			if(x > numTiles){
+				x = 0;
+			}
+		}
+	}
 
 	for(unsigned y = 0; y < 15; y++){
 		for(unsigned x = 0; x < 20; x++){
-			if(CHUNK[y][x] == 1){
-				entities.emplace_back(new Entity(windrend.renderer, "tile.png", x*32, y*32));
+			if(chunk[y][x]){
+				entities.emplace_back(new Entity(windrend.renderer, tiles[chunk[y][x]-1].c_str(), x*32, y*32));
 			}
 		}
 	}
