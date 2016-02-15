@@ -23,9 +23,9 @@
 
 #include "SDL.h"
 
-#include "Entity.h"
 #include "ImageSystem.h"
 #include "Texture.h"
+#include "Tile.h"
 
 #include "World.h"
 
@@ -110,7 +110,7 @@ void World::loadFiles(){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				entities.emplace_back(new Entity(windrend.renderer, tiles[id-1], x*32, y*32));
+				entities.emplace_back(new Tile(windrend.renderer, tiles[id-1], x*32, y*32));
 			}
 		}
 	}

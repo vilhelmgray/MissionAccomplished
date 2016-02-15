@@ -19,22 +19,18 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <memory>
-
 #include "SDL.h"
 
-#include "Texture.h"
-
 class Entity{
+	protected:
 		SDL_Renderer *rend;
-		std::shared_ptr<Texture> tex;
 		SDL_Rect sprite;
 		SDL_Rect position;
 
 	public:
-		Entity(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y);
+		Entity(SDL_Renderer *renderer, const unsigned X, const unsigned Y);
 
-		void draw();
+		virtual void draw() =0;
 };
 
 #endif

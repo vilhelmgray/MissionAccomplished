@@ -16,20 +16,22 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <memory>
+#include <stdexcept>
+
 #include "SDL.h"
 
 #include "Entity.h"
+#include "Texture.h"
 
-Entity::Entity(SDL_Renderer *renderer, const unsigned X, const unsigned Y){
-	rend = renderer;
+#include "Tile.h"
 
-	sprite.x = 0;
-	sprite.y = 0;
-	sprite.w = 32;
-	sprite.h = 32;
+Tile::Tile(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y) : Entity(renderer, X, Y){
+	tex = texture;
+}
 
-	position.x = X;
-	position.y = Y;
-	position.w = 32;
-	position.h = 32;
+void Tile::draw(){
+	if(SDL_RenderCopy(rend, tex->texture, &sprite, &position) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
 }

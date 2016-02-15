@@ -16,20 +16,23 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#ifndef TILE_H
+#define TILE_H
+
+#include <memory>
+
 #include "SDL.h"
 
 #include "Entity.h"
+#include "Texture.h"
 
-Entity::Entity(SDL_Renderer *renderer, const unsigned X, const unsigned Y){
-	rend = renderer;
+class Tile: public Entity{
+		std::shared_ptr<Texture> tex;
 
-	sprite.x = 0;
-	sprite.y = 0;
-	sprite.w = 32;
-	sprite.h = 32;
+	public:
+		Tile(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y);
 
-	position.x = X;
-	position.y = Y;
-	position.w = 32;
-	position.h = 32;
-}
+		void draw();
+};
+
+#endif
