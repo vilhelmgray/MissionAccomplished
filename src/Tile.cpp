@@ -26,7 +26,7 @@
 
 #include "Tile.h"
 
-Tile::Tile(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y) : Entity(renderer, X, Y){
+Tile::Tile(std::shared_ptr<Texture> texture, SDL_Renderer *renderer, const unsigned X, const unsigned Y) : Entity(renderer, X, Y){
 	tex = texture;
 }
 

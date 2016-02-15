@@ -110,7 +110,7 @@ void World::loadFiles(){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				entities.emplace_back(new Tile(windrend.renderer, tile_textures[id-1], x*32, y*32));
+				entities.emplace_back(new Tile(tile_textures[id-1], windrend.renderer, x*32, y*32));
 			}
 		}
 	}

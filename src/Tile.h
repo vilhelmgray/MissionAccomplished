@@ -30,7 +30,7 @@ class Tile: public Entity{
 		std::shared_ptr<Texture> tex;
 
 	public:
-		Tile(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y);
+		Tile(std::shared_ptr<Texture> texture, SDL_Renderer *renderer, const unsigned X, const unsigned Y);
 
 		void draw();
 };
