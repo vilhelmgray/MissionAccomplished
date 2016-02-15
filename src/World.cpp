@@ -97,7 +97,7 @@ void World::loadFiles(){
 		std::string tileFilePath;
 		mapFile >> tileFilePath;
 
-		tiles.emplace_back(new Texture(windrend.renderer, tileFilePath.c_str()));
+		tile_textures.emplace_back(new Texture(windrend.renderer, tileFilePath.c_str()));
 	}
 
 	unsigned width;
@@ -110,7 +110,7 @@ void World::loadFiles(){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				entities.emplace_back(new Tile(windrend.renderer, tiles[id-1], x*32, y*32));
+				entities.emplace_back(new Tile(windrend.renderer, tile_textures[id-1], x*32, y*32));
 			}
 		}
 	}

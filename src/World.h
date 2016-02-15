@@ -32,7 +32,7 @@ class World{
 		WindRend windrend;
 
 		std::unique_ptr<Texture> background;
-		std::vector<std::shared_ptr<Texture>> tiles;
+		std::vector<std::shared_ptr<Texture>> tile_textures;
 
 		std::vector<std::unique_ptr<Entity>> entities;
 
