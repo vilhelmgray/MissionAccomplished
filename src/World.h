@@ -34,8 +34,6 @@ class World{
 		std::unique_ptr<Texture> background;
 		std::vector<std::shared_ptr<Texture>> tiles;
 
-		unsigned chunk[15][20];
-
 		std::vector<std::unique_ptr<Entity>> entities;
 
 		void draw();

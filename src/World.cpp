@@ -100,19 +100,17 @@ void World::loadFiles(){
 		tiles.emplace_back(new Texture(windrend.renderer, tileFilePath.c_str()));
 	}
 
-	for(auto& y : chunk ){
-		for(auto& x : y){
-			mapFile >> x;
-			if(x > numTiles){
-				x = 0;
-			}
-		}
-	}
+	unsigned width;
+	mapFile >> width;
+	unsigned height;
+	mapFile >> height;
 
-	for(unsigned y = 0; y < 15; y++){
-		for(unsigned x = 0; x < 20; x++){
-			if(chunk[y][x]){
-				entities.emplace_back(new Entity(windrend.renderer, tiles[chunk[y][x]-1], x*32, y*32));
+	for(unsigned y = 0; y < height; y++){
+		for(unsigned x = 0; x < width; x++){
+			unsigned id;
+			mapFile >> id;
+			if(id){
+				entities.emplace_back(new Entity(windrend.renderer, tiles[id-1], x*32, y*32));
 			}
 		}
 	}
