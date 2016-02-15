@@ -20,7 +20,6 @@
 #define WORLD_H
 
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "Entity.h"
@@ -33,7 +32,7 @@ class World{
 		WindRend windrend;
 
 		std::unique_ptr<Texture> background;
-		std::vector<std::string> tiles;
+		std::vector<std::shared_ptr<Texture>> tiles;
 
 		unsigned chunk[15][20];
 

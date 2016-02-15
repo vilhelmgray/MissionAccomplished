@@ -23,8 +23,10 @@
 
 #include "Entity.h"
 
-Entity::Entity(SDL_Renderer *renderer, const char *file, const unsigned X, const unsigned Y){
-	tex = std::unique_ptr<Texture>(new Texture(renderer, file));
+Entity::Entity(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y){
+	rend = renderer;
+
+	tex = texture;
 
 	sprite.x = 0;
 	sprite.y = 0;
@@ -37,8 +39,8 @@ Entity::Entity(SDL_Renderer *renderer, const char *file, const unsigned X, const
 	position.h = 32;
 }
 
-void Entity::draw(SDL_Renderer *renderer){
-	if(SDL_RenderCopy(renderer, tex->texture, &sprite, &position) < 0){
+void Entity::draw(){
+	if(SDL_RenderCopy(rend, tex->texture, &sprite, &position) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 }

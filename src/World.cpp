@@ -55,7 +55,7 @@ void World::draw(){
 	}
 
 	for(auto& entity : entities){
-		entity->draw(windrend.renderer);
+		entity->draw();
 	}
 
 	SDL_RenderPresent(windrend.renderer);
@@ -97,7 +97,7 @@ void World::loadFiles(){
 		std::string tileFilePath;
 		mapFile >> tileFilePath;
 
-		tiles.emplace_back(tileFilePath);
+		tiles.emplace_back(new Texture(windrend.renderer, tileFilePath.c_str()));
 	}
 
 	for(auto& y : chunk ){
@@ -112,7 +112,7 @@ void World::loadFiles(){
 	for(unsigned y = 0; y < 15; y++){
 		for(unsigned x = 0; x < 20; x++){
 			if(chunk[y][x]){
-				entities.emplace_back(new Entity(windrend.renderer, tiles[chunk[y][x]-1].c_str(), x*32, y*32));
+				entities.emplace_back(new Entity(windrend.renderer, tiles[chunk[y][x]-1], x*32, y*32));
 			}
 		}
 	}

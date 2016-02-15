@@ -26,14 +26,15 @@
 #include "Texture.h"
 
 class Entity{
-		std::unique_ptr<Texture> tex;
+		SDL_Renderer *rend;
+		std::shared_ptr<Texture> tex;
 		SDL_Rect sprite;
 		SDL_Rect position;
 
 	public:
-		Entity(SDL_Renderer *renderer, const char *file, const unsigned X, const unsigned Y);
+		Entity(SDL_Renderer *renderer, std::shared_ptr<Texture> texture, const unsigned X, const unsigned Y);
 
-		void draw(SDL_Renderer *renderer);
+		void draw();
 };
 
 #endif
