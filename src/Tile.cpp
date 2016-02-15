@@ -26,9 +26,7 @@
 
 #include "Tile.h"
 
-Tile::Tile(std::shared_ptr<Texture> texture, SDL_Renderer *renderer, const unsigned X, const unsigned Y) : Entity(renderer, X, Y){
-	tex = texture;
-}
+Tile::Tile(std::shared_ptr<Texture> texture, SDL_Renderer *renderer, const unsigned X, const unsigned Y) : Entity(renderer, X, Y), tex(texture) {}
 
 void Tile::draw(){
 	if(SDL_RenderCopy(rend, tex->texture, &sprite, &position) < 0){
