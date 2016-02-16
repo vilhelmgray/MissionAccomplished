@@ -16,37 +16,20 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WORLD_H
-#define WORLD_H
-
 #include <memory>
-#include <vector>
+#include <stdexcept>
+
+#include "SDL.h"
+
+#include "Entity.h"
+#include "Texture.h"
 
 #include "Character.h"
-#include "SimpleDirectLayer.h"
-#include "Texture.h"
-#include "Tile.h"
-#include "WindRend.h"
 
-class World{
-		SimpleDirectLayer sdl;
-		WindRend windrend;
+Character::Character(std::vector<std::shared_ptr<Texture>> textures, SDL_Renderer *renderer, const unsigned X, const unsigned Y) : Entity(renderer, X, Y), pose(0), poses(textures){}
 
-		std::unique_ptr<Character> player;
-
-		std::unique_ptr<Texture> background;
-		std::vector<std::shared_ptr<Texture>> tile_textures;
-
-		std::vector<std::unique_ptr<Tile>> tiles;
-
-		void draw();
-		bool handleEvents();
-		void loadFiles();
-
-	public:
-		World();
-
-		bool tick();
-};
-
-#endif
+void Character::draw(){
+	if(SDL_RenderCopy(rend, poses[pose]->texture, &sprite, &position) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+}

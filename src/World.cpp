@@ -23,6 +23,7 @@
 
 #include "SDL.h"
 
+#include "Character.h"
 #include "ImageSystem.h"
 #include "Texture.h"
 #include "Tile.h"
@@ -54,9 +55,11 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	for(auto& entity : entities){
-		entity->draw();
+	for(auto& tile : tiles){
+		tile->draw();
 	}
+
+	player->draw();
 
 	SDL_RenderPresent(windrend.renderer);
 }
@@ -85,6 +88,22 @@ void World::loadFiles(){
 
 	mapFile.open("level1.map");
 
+	unsigned numPoses;
+	mapFile >> numPoses;
+	std::vector<std::shared_ptr<Texture>> poses;
+	for(unsigned i = 0; i < numPoses; i++){
+		std::string poseFilePath;
+		mapFile >> poseFilePath;
+
+		poses.emplace_back(new Texture(windrend.renderer, poseFilePath.c_str()));
+	}
+
+	unsigned x;
+	mapFile >> x;
+	unsigned y;
+	mapFile >> y;
+	player = std::unique_ptr<Character>(new Character(poses, windrend.renderer, x, y));
+
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
 
@@ -105,12 +124,12 @@ void World::loadFiles(){
 	unsigned height;
 	mapFile >> height;
 
-	for(unsigned y = 0; y < height; y++){
-		for(unsigned x = 0; x < width; x++){
+	for(y = 0; y < height; y++){
+		for(x = 0; x < width; x++){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				entities.emplace_back(new Tile(tile_textures[id-1], windrend.renderer, x*32, y*32));
+				tiles.emplace_back(new Tile(tile_textures[id-1], windrend.renderer, x*32, y*32));
 			}
 		}
 	}
