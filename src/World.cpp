@@ -20,6 +20,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 #include "SDL.h"
 
@@ -30,7 +31,7 @@
 
 #include "World.h"
 
-World::World(){
+World::World(const std::string& mapFilePath){
 	if(SDL_ShowCursor(SDL_DISABLE) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
@@ -43,7 +44,7 @@ World::World(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	loadFiles();
+	loadFiles(mapFilePath);
 }
 
 void World::draw(){
@@ -84,11 +85,11 @@ bool World::handleEvents(){
 	return false;
 }
 
-void World::loadFiles(){
+void World::loadFiles(const std::string& mapFilePath){
 	std::ifstream mapFile;
 	mapFile.exceptions(mapFile.failbit | mapFile.badbit);
 
-	mapFile.open("level1.map");
+	mapFile.open(mapFilePath);
 
 	unsigned numPoses;
 	mapFile >> numPoses;

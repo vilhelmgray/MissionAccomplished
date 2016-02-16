@@ -18,14 +18,19 @@
  */
 #include <exception>
 #include <iostream>
+#include <string>
 
 #include "SDL.h"
 
 #include "World.h"
 
 int main(){
+	std::cout << "Please enter the map file path: ";
+	std::string mapFilePath;
+	std::cin >> mapFilePath;
+
 	try{
-		World world;
+		World world(mapFilePath);
 
 		Uint32 lastFrame = 0;
 		while(true){

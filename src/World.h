@@ -20,6 +20,7 @@
 #define WORLD_H
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "Player.h"
@@ -41,10 +42,10 @@ class World{
 
 		void draw();
 		bool handleEvents();
-		void loadFiles();
+		void loadFiles(const std::string& mapFilePath);
 
 	public:
-		World();
+		World(const std::string& mapFilePath);
 
 		bool tick();
 };
