@@ -59,13 +59,3 @@ void Player::evaluate_event(SDL_Event *const event){
 			break;
 	}
 }
-
-void Player::tick(){
-	Character::tick();
-
-	if(velocity.x){
-		pose = ((pose + 1) % (poses.size() - 1)) + 1;
-	}else{
-		pose = 0;
-	}
-}

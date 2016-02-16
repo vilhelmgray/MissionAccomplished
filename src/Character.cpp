@@ -29,4 +29,10 @@ Character::Character(std::vector<std::shared_ptr<Texture>> textures, const unsig
 void Character::tick(){
 	position.x += velocity.x;
 	position.y += velocity.y;
+
+	if(velocity.x){
+		pose = ((pose + 1) % (poses.size() - 1)) + 1;
+	}else{
+		pose = 0;
+	}
 }

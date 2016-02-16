@@ -33,8 +33,6 @@ class Player: public Character{
 
 		void draw(SDL_Renderer *const rend);
 		void evaluate_event(SDL_Event *const event);
-
-		virtual void tick();
 };
 
 #endif
