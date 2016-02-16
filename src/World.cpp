@@ -138,12 +138,12 @@ void World::loadFiles(const std::string& mapFilePath){
 	}
 }
 
-bool World::tick(){
+bool World::tick(const unsigned fps){
 	if(handleEvents()){
 		return true;
 	}
 
-	player->tick();
+	player->tick(fps);
 
 	draw();
 

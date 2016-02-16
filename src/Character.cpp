@@ -34,13 +34,20 @@ void Character::draw(SDL_Renderer *const rend){
 	Entity::draw(rend);
 }
 
-void Character::tick(){
+void Character::tick(const unsigned fps){
 	position.x += velocity.x;
 	position.y += velocity.y;
 
+	static unsigned framesElapsed = 0;
 	if(velocity.x){
-		pose = ((pose + 1) % (poses.size() - 1)) + 1;
+		const unsigned numWalkPoses = poses.size() - 1;
+		const unsigned walkPosePersistance = fps / numWalkPoses;
+
+		pose = (framesElapsed / walkPosePersistance) + 1;
+
+		framesElapsed = (framesElapsed + 1) % walkPosePersistance;
 	}else{
 		pose = 0;
+		framesElapsed = 0;
 	}
 }

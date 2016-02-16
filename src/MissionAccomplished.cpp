@@ -35,10 +35,12 @@ int main(){
 		Uint32 lastFrame = 0;
 		while(true){
 			Uint32 currFrame = SDL_GetTicks();
-			if(currFrame - lastFrame > 16){
+			const unsigned fps = 60;
+			const unsigned millisecondsPerFrame = 1000 / fps;
+			if(currFrame - lastFrame > millisecondsPerFrame){
 				lastFrame = currFrame;
 
-				if(world.tick()){
+				if(world.tick(fps)){
 					break;
 				}
 			}

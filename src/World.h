@@ -47,7 +47,7 @@ class World{
 	public:
 		World(const std::string& mapFilePath);
 
-		bool tick();
+		bool tick(const unsigned fps);
 };
 
 #endif
