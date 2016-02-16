@@ -17,7 +17,6 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include <memory>
-#include <stdexcept>
 #include <vector>
 
 #include "SDL.h"
@@ -27,12 +26,12 @@
 
 #include "Player.h"
 
-Player::Player(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y) : Character(textures, X, Y){}
+Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Character(X, Y, textures){}
 
 void Player::draw(SDL_Renderer *const rend){
-	if(SDL_RenderCopy(rend, poses[pose]->texture, &sprite, &position) < 0){
-		throw std::runtime_error(SDL_GetError());
-	}
+	tex = poses[pose];
+
+	Entity::draw(rend);
 }
 
 void Player::evaluate_event(SDL_Event *const event){

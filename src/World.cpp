@@ -24,10 +24,10 @@
 
 #include "SDL.h"
 
+#include "Entity.h"
 #include "Player.h"
 #include "ImageSystem.h"
 #include "Texture.h"
-#include "Tile.h"
 
 #include "World.h"
 
@@ -105,7 +105,7 @@ void World::loadFiles(const std::string& mapFilePath){
 	mapFile >> x;
 	unsigned y;
 	mapFile >> y;
-	player = std::unique_ptr<Player>(new Player(poses, x, y));
+	player = std::unique_ptr<Player>(new Player(x, y, poses));
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
@@ -132,7 +132,7 @@ void World::loadFiles(const std::string& mapFilePath){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				tiles.emplace_back(new Tile(tile_textures[id-1], x*32, y*32));
+				tiles.emplace_back(new Entity(x*32, y*32, tile_textures[id-1]));
 			}
 		}
 	}

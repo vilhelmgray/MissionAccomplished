@@ -29,7 +29,7 @@
 
 class Player: public Character{
 	public:
-		Player(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y);
+		Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures);
 
 		void draw(SDL_Renderer *const rend);
 		void evaluate_event(SDL_Event *const event);

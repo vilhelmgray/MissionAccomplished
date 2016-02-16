@@ -24,7 +24,7 @@
 
 #include "Character.h"
 
-Character::Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y) : Entity(X, Y), pose(), poses(textures), velocity(), face() {}
+Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0]), pose(), poses(textures), velocity(), face() {}
 
 void Character::tick(){
 	position.x += velocity.x;

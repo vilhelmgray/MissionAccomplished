@@ -23,10 +23,10 @@
 #include <string>
 #include <vector>
 
+#include "Entity.h"
 #include "Player.h"
 #include "SimpleDirectLayer.h"
 #include "Texture.h"
-#include "Tile.h"
 #include "WindRend.h"
 
 class World{
@@ -38,7 +38,7 @@ class World{
 		std::unique_ptr<Texture> background;
 		std::vector<std::shared_ptr<Texture>> tile_textures;
 
-		std::vector<std::unique_ptr<Tile>> tiles;
+		std::vector<std::unique_ptr<Entity>> tiles;
 
 		void draw();
 		bool handleEvents();
