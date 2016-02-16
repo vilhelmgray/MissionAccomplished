@@ -33,15 +33,15 @@ void Player::evaluate_event(SDL_Event *const event){
 		case SDL_KEYDOWN:
 			switch(event->key.keysym.sym){
 				case SDLK_SPACE:
-					velocity.y = -5;
+					velocity.y = -160;
 					break;
 				case SDLK_a:
 					face = 1;
-					velocity.x = -5;
+					velocity.x = -20;
 					break;
 				case SDLK_d:
 					face = 0;
-					velocity.x = 5;
+					velocity.x = 20;
 					break;
 			}
 			break;
