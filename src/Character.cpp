@@ -36,13 +36,16 @@ void Character::draw(SDL_Renderer *const rend){
 
 void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps){
 	position.x += velocity.x;
-	position.y += velocity.y;
+	position.y += ++velocity.y;
 
 	for(auto& tile : tiles){
 		SDL_Rect collisionArea;
 		if(tile->collision(&position, &collisionArea)){
 			position.x -= (velocity.x > 0) * collisionArea.w;
-			position.y -= (velocity.y > 0) * collisionArea.h;
+			if(collisionArea.h){
+				position.y -= (velocity.y > 0) * collisionArea.h;
+				velocity.y = 0;
+			}
 		}
 	}
 
