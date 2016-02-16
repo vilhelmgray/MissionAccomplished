@@ -16,37 +16,23 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <memory>
 #include <vector>
 
-#include "Player.h"
-#include "SimpleDirectLayer.h"
+#include "SDL.h"
+
+#include "Character.h"
 #include "Texture.h"
-#include "Tile.h"
-#include "WindRend.h"
 
-class World{
-		SimpleDirectLayer sdl;
-		WindRend windrend;
-
-		std::unique_ptr<Player> player;
-
-		std::unique_ptr<Texture> background;
-		std::vector<std::shared_ptr<Texture>> tile_textures;
-
-		std::vector<std::unique_ptr<Tile>> tiles;
-
-		void draw();
-		bool handleEvents();
-		void loadFiles();
-
+class Player: public Character{
 	public:
-		World();
+		Player(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y);
 
-		bool tick();
+		void draw(SDL_Renderer *const rend);
+		void evaluate_event(SDL_Event *const event);
 };
 
 #endif

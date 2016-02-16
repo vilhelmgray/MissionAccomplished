@@ -17,19 +17,16 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include <memory>
-#include <stdexcept>
-
-#include "SDL.h"
+#include <vector>
 
 #include "Entity.h"
 #include "Texture.h"
 
 #include "Character.h"
 
-Character::Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y) : Entity(X, Y), pose(0), poses(textures){}
+Character::Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y) : Entity(X, Y), pose(), poses(textures), velocity(), face() {}
 
-void Character::draw(SDL_Renderer *const rend){
-	if(SDL_RenderCopy(rend, poses[pose]->texture, &sprite, &position) < 0){
-		throw std::runtime_error(SDL_GetError());
-	}
+void Character::tick(){
+	position.x += velocity.x;
+	position.y += velocity.y;
 }

@@ -16,37 +16,46 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WORLD_H
-#define WORLD_H
-
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
-#include "Player.h"
-#include "SimpleDirectLayer.h"
+#include "SDL.h"
+
+#include "Character.h"
 #include "Texture.h"
-#include "Tile.h"
-#include "WindRend.h"
 
-class World{
-		SimpleDirectLayer sdl;
-		WindRend windrend;
+#include "Player.h"
 
-		std::unique_ptr<Player> player;
+Player::Player(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y) : Character(textures, X, Y){}
 
-		std::unique_ptr<Texture> background;
-		std::vector<std::shared_ptr<Texture>> tile_textures;
+void Player::draw(SDL_Renderer *const rend){
+	if(SDL_RenderCopy(rend, poses[pose]->texture, &sprite, &position) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+}
 
-		std::vector<std::unique_ptr<Tile>> tiles;
-
-		void draw();
-		bool handleEvents();
-		void loadFiles();
-
-	public:
-		World();
-
-		bool tick();
-};
-
-#endif
+void Player::evaluate_event(SDL_Event *const event){
+	switch(event->type){
+		case SDL_KEYDOWN:
+			switch(event->key.keysym.sym){
+				case SDLK_a:
+					face = 1;
+					velocity.x = -5;
+					break;
+				case SDLK_d:
+					face = 0;
+					velocity.x = 5;
+					break;
+			}
+			break;
+		case SDL_KEYUP:
+			switch(event->key.keysym.sym){
+				case SDLK_a:
+				case SDLK_d:
+					velocity.x = 0;
+					break;
+			}
+			break;
+	}
+}

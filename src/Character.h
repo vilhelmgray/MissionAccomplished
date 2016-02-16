@@ -22,19 +22,26 @@
 #include <memory>
 #include <vector>
 
-#include "SDL.h"
-
 #include "Entity.h"
 #include "Texture.h"
 
 class Character: public Entity{
+	protected:
 		std::vector<std::shared_ptr<Texture>>::size_type pose;
 		std::vector<std::shared_ptr<Texture>> poses;
+
+		struct{
+			unsigned x;
+			unsigned y;
+		} velocity;
+
+		unsigned face;
+
 
 	public:
 		Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y);
 
-		void draw(SDL_Renderer *const rend);
+		void tick();
 };
 
 #endif

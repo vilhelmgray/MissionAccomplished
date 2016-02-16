@@ -17,5 +17,5 @@
 ## <http://www.gnu.org/licenses/>.
 
 bin_PROGRAMS = MissionAccomplished
-MissionAccomplished_SOURCES = MissionAccomplished.cpp Character.cpp Entity.cpp ImageSystem.cpp SimpleDirectLayer.cpp Surface.cpp Texture.cpp Tile.cpp WindRend.cpp World.cpp
-MissionAccomplished_SOURCES += Character.h Entity.h ImageSystem.h SimpleDirectLayer.h Surface.h Texture.h Tile.h WindRend.h World.h
+MissionAccomplished_SOURCES = MissionAccomplished.cpp Character.cpp Entity.cpp ImageSystem.cpp Player.cpp SimpleDirectLayer.cpp Surface.cpp Texture.cpp Tile.cpp WindRend.cpp World.cpp
+MissionAccomplished_SOURCES += Character.h Entity.h ImageSystem.h Player.h SimpleDirectLayer.h Surface.h Texture.h Tile.h WindRend.h World.h

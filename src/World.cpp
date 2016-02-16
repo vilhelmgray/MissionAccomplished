@@ -23,7 +23,7 @@
 
 #include "SDL.h"
 
-#include "Character.h"
+#include "Player.h"
 #include "ImageSystem.h"
 #include "Texture.h"
 #include "Tile.h"
@@ -69,10 +69,12 @@ bool World::handleEvents(){
 	while(SDL_PollEvent(&event)){
 		switch(event.type){
 			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym){
-					case SDLK_ESCAPE:
-						return true;
+			case SDL_KEYUP:
+				if(event.key.keysym.sym == SDLK_ESCAPE){
+					return true;
 				}
+
+				player->evaluate_event(&event);
 				break;
 			case SDL_QUIT:
 				return true;
@@ -102,7 +104,7 @@ void World::loadFiles(){
 	mapFile >> x;
 	unsigned y;
 	mapFile >> y;
-	player = std::unique_ptr<Character>(new Character(poses, x, y));
+	player = std::unique_ptr<Player>(new Player(poses, x, y));
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
@@ -139,6 +141,8 @@ bool World::tick(){
 	if(handleEvents()){
 		return true;
 	}
+
+	player->tick();
 
 	draw();
 
