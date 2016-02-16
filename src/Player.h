@@ -22,8 +22,6 @@
 #include <memory>
 #include <vector>
 
-#include "SDL.h"
-
 #include "Character.h"
 #include "Texture.h"
 
@@ -31,7 +29,6 @@ class Player: public Character{
 	public:
 		Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures);
 
-		void draw(SDL_Renderer *const rend);
 		void evaluate_event(SDL_Event *const event);
 };
 

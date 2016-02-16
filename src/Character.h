@@ -22,6 +22,8 @@
 #include <memory>
 #include <vector>
 
+#include "SDL.h"
+
 #include "Entity.h"
 #include "Texture.h"
 
@@ -35,12 +37,10 @@ class Character: public Entity{
 			unsigned y;
 		} velocity;
 
-		unsigned face;
-
-
 	public:
 		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures);
 
+		void draw(SDL_Renderer *const rend);
 		void tick();
 };
 

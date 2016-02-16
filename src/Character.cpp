@@ -19,12 +19,20 @@
 #include <memory>
 #include <vector>
 
+#include "SDL.h"
+
 #include "Entity.h"
 #include "Texture.h"
 
 #include "Character.h"
 
-Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0]), pose(), poses(textures), velocity(), face() {}
+Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0]), pose(), poses(textures), velocity() {}
+
+void Character::draw(SDL_Renderer *const rend){
+	tex = poses[pose];
+
+	Entity::draw(rend);
+}
 
 void Character::tick(){
 	position.x += velocity.x;

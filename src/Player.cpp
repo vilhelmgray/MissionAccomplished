@@ -28,12 +28,6 @@
 
 Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Character(X, Y, textures){}
 
-void Player::draw(SDL_Renderer *const rend){
-	tex = poses[pose];
-
-	Entity::draw(rend);
-}
-
 void Player::evaluate_event(SDL_Event *const event){
 	switch(event->type){
 		case SDL_KEYDOWN:

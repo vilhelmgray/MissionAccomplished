@@ -32,6 +32,8 @@ class Entity{
 
 		std::shared_ptr<Texture> tex;
 
+		unsigned face;
+
 	public:
 		Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture);
 
