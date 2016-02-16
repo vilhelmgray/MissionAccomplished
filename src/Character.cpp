@@ -26,9 +26,9 @@
 
 #include "Character.h"
 
-Character::Character(std::vector<std::shared_ptr<Texture>> textures, SDL_Renderer *renderer, const unsigned X, const unsigned Y) : Entity(renderer, X, Y), pose(0), poses(textures){}
+Character::Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y) : Entity(X, Y), pose(0), poses(textures){}
 
-void Character::draw(){
+void Character::draw(SDL_Renderer *const rend){
 	if(SDL_RenderCopy(rend, poses[pose]->texture, &sprite, &position) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}

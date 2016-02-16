@@ -32,9 +32,9 @@ class Character: public Entity{
 		std::vector<std::shared_ptr<Texture>> poses;
 
 	public:
-		Character(std::vector<std::shared_ptr<Texture>> textures, SDL_Renderer *renderer, const unsigned X, const unsigned Y);
+		Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y);
 
-		void draw();
+		void draw(SDL_Renderer *const rend);
 };
 
 #endif

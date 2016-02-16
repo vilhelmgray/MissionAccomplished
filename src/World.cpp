@@ -56,10 +56,10 @@ void World::draw(){
 	}
 
 	for(auto& tile : tiles){
-		tile->draw();
+		tile->draw(windrend.renderer);
 	}
 
-	player->draw();
+	player->draw(windrend.renderer);
 
 	SDL_RenderPresent(windrend.renderer);
 }
@@ -102,7 +102,7 @@ void World::loadFiles(){
 	mapFile >> x;
 	unsigned y;
 	mapFile >> y;
-	player = std::unique_ptr<Character>(new Character(poses, windrend.renderer, x, y));
+	player = std::unique_ptr<Character>(new Character(poses, x, y));
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
@@ -129,7 +129,7 @@ void World::loadFiles(){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				tiles.emplace_back(new Tile(tile_textures[id-1], windrend.renderer, x*32, y*32));
+				tiles.emplace_back(new Tile(tile_textures[id-1], x*32, y*32));
 			}
 		}
 	}

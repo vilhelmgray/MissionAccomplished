@@ -16,13 +16,9 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include "SDL.h"
-
 #include "Entity.h"
 
-Entity::Entity(SDL_Renderer *renderer, const unsigned X, const unsigned Y){
-	rend = renderer;
-
+Entity::Entity(const unsigned X, const unsigned Y){
 	sprite.x = 0;
 	sprite.y = 0;
 	sprite.w = 32;

@@ -23,14 +23,13 @@
 
 class Entity{
 	protected:
-		SDL_Renderer *rend;
 		SDL_Rect sprite;
 		SDL_Rect position;
 
 	public:
-		Entity(SDL_Renderer *renderer, const unsigned X, const unsigned Y);
+		Entity(const unsigned X, const unsigned Y);
 
-		virtual void draw() =0;
+		virtual void draw(SDL_Renderer *const rend) =0;
 };
 
 #endif
