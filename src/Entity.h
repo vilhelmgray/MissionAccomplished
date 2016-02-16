@@ -33,10 +33,12 @@ class Entity{
 		std::shared_ptr<Texture> tex;
 
 		unsigned face;
+		unsigned solid;
 
 	public:
-		Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture);
+		Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const unsigned isSolid);
 
+		bool collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea);
 		virtual void draw(SDL_Renderer *const rend);
 };
 

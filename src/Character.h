@@ -41,7 +41,7 @@ class Character: public Entity{
 		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures);
 
 		void draw(SDL_Renderer *const rend);
-		void tick(const unsigned fps);
+		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps);
 };
 
 #endif

@@ -25,7 +25,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture) : tex(texture), face() {
+Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const unsigned isSolid) : tex(texture), face(), solid(isSolid) {
 	sprite.x = 0;
 	sprite.y = 0;
 	sprite.w = 32;
@@ -35,6 +35,10 @@ Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> text
 	position.y = Y;
 	position.w = 32;
 	position.h = 32;
+}
+
+bool Entity::collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea){
+	return (solid) ? SDL_IntersectRect(agent, &position, collisionArea) : false;
 }
 
 void Entity::draw(SDL_Renderer *const rend){

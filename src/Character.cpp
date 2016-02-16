@@ -26,7 +26,7 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0]), pose(), poses(textures), velocity() {}
+Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0], 1), pose(), poses(textures), velocity() {}
 
 void Character::draw(SDL_Renderer *const rend){
 	tex = poses[pose];
@@ -34,9 +34,17 @@ void Character::draw(SDL_Renderer *const rend){
 	Entity::draw(rend);
 }
 
-void Character::tick(const unsigned fps){
+void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps){
 	position.x += velocity.x;
 	position.y += velocity.y;
+
+	for(auto& tile : tiles){
+		SDL_Rect collisionArea;
+		if(tile->collision(&position, &collisionArea)){
+			position.x -= (velocity.x > 0) * collisionArea.w;
+			position.y -= (velocity.y > 0) * collisionArea.h;
+		}
+	}
 
 	static unsigned framesElapsed = 0;
 	if(velocity.x){

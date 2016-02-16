@@ -122,6 +122,9 @@ void World::loadFiles(const std::string& mapFilePath){
 		tile_textures.emplace_back(new Texture(windrend.renderer, tileFilePath.c_str()));
 	}
 
+	unsigned solidTiles;
+	mapFile >> solidTiles;
+
 	unsigned width;
 	mapFile >> width;
 	unsigned height;
@@ -132,7 +135,7 @@ void World::loadFiles(const std::string& mapFilePath){
 			unsigned id;
 			mapFile >> id;
 			if(id){
-				tiles.emplace_back(new Entity(x*32, y*32, tile_textures[id-1]));
+				tiles.emplace_back(new Entity(x*32, y*32, tile_textures[id-1], id >= solidTiles));
 			}
 		}
 	}
@@ -143,7 +146,7 @@ bool World::tick(const unsigned fps){
 		return true;
 	}
 
-	player->tick(fps);
+	player->tick(tiles, fps);
 
 	draw();
 
