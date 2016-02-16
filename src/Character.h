@@ -41,7 +41,7 @@ class Character: public Entity{
 	public:
 		Character(std::vector<std::shared_ptr<Texture>> textures, const unsigned X, const unsigned Y);
 
-		void tick();
+		virtual void tick();
 };
 
 #endif
