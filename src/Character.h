@@ -33,9 +33,9 @@ class Character: public Entity{
 		std::vector<std::shared_ptr<Texture>> poses;
 
 		struct{
-			unsigned x;
-			unsigned y;
-		} velocity;
+			double x;
+			double y;
+		} vel, pos;
 
 	public:
 		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures);

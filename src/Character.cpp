@@ -26,7 +26,10 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0], 1), pose(), poses(textures), velocity() {}
+Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0], 1), pose(), poses(textures), vel() {
+	pos.x = position.x;
+	pos.y = position.y;
+}
 
 void Character::draw(SDL_Renderer *const rend){
 	tex = poses[pose];
@@ -35,27 +38,33 @@ void Character::draw(SDL_Renderer *const rend){
 }
 
 void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps){
-	position.x += velocity.x / fps;
-	velocity.y += 160 / fps;
-	position.y += velocity.y / fps;
+	vel.y += 160 / fps;
+
+	pos.x += vel.x / fps;
+	pos.y += vel.y / fps;
+
+	position.x = pos.x;
+	position.y = pos.y;
 
 	for(auto& tile : tiles){
 		SDL_Rect collisionArea;
 		if(tile->collision(&position, &collisionArea)){
-			if(velocity.y){
-				position.y -= (velocity.y > 0 ? 1 : -1) * collisionArea.h;
-				velocity.y = 0;
+			if(vel.y){
+				position.y -= (vel.y > 0 ? 1 : -1) * collisionArea.h;
+				pos.y = position.y;
+				vel.y = 0;
 			}
 		}
 		if(tile->collision(&position, &collisionArea)){
-			if(velocity.x){
-				position.x -= (velocity.x > 0 ? 1 : -1) * collisionArea.w;
+			if(vel.x){
+				position.x -= (vel.x > 0 ? 1 : -1) * collisionArea.w;
+				pos.x = position.x;
 			}
 		}
 	}
 
 	static unsigned framesElapsed = 0;
-	if(velocity.x){
+	if(vel.x){
 		const unsigned numWalkPoses = poses.size() - 1;
 		const unsigned walkPosePersistance = fps / numWalkPoses;
 
