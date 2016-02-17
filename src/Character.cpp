@@ -70,7 +70,7 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 
 		pose = (framesElapsed / walkPosePersistance) + 1;
 
-		framesElapsed = (framesElapsed + 1) % walkPosePersistance;
+		framesElapsed = (framesElapsed + 1) % fps;
 	}else{
 		pose = 0;
 		framesElapsed = 0;
