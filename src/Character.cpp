@@ -36,7 +36,7 @@ void Character::draw(SDL_Renderer *const rend){
 
 void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps){
 	position.x += velocity.x / fps;
-	velocity.y += 160;
+	velocity.y += 160 / fps;
 	position.y += velocity.y / fps;
 
 	for(auto& tile : tiles){
