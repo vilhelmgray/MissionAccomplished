@@ -42,10 +42,14 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 	for(auto& tile : tiles){
 		SDL_Rect collisionArea;
 		if(tile->collision(&position, &collisionArea)){
-			position.x -= (velocity.x > 0) * collisionArea.w;
-			if(collisionArea.h){
-				position.y -= (velocity.y > 0) * collisionArea.h;
+			if(velocity.y){
+				position.y -= (velocity.y > 0 ? 1 : -1) * collisionArea.h;
 				velocity.y = 0;
+			}
+		}
+		if(tile->collision(&position, &collisionArea)){
+			if(velocity.x){
+				position.x -= (velocity.x > 0 ? 1 : -1) * collisionArea.w;
 			}
 		}
 	}
