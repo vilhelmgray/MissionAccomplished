@@ -31,18 +31,20 @@ Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<T
 void Player::evaluate_event(SDL_Event *const event){
 	switch(event->type){
 		case SDL_KEYDOWN:
-			switch(event->key.keysym.sym){
-				case SDLK_SPACE:
-					vel.y = -160;
-					break;
-				case SDLK_a:
-					face = 1;
-					vel.x = -60;
-					break;
-				case SDLK_d:
-					face = 0;
-					vel.x = 60;
-					break;
+			if(!event->key.repeat){
+				switch(event->key.keysym.sym){
+					case SDLK_SPACE:
+						vel.y = -160;
+						break;
+					case SDLK_a:
+						face = 1;
+						vel.x = -60;
+						break;
+					case SDLK_d:
+						face = 0;
+						vel.x = 60;
+						break;
+				}
 			}
 			break;
 		case SDL_KEYUP:
