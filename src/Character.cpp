@@ -43,25 +43,22 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 	pos.x += vel.x / fps;
 	pos.y += vel.y / fps;
 
-	position.x = pos.x;
-	position.y = pos.y;
-
 	for(auto& tile : tiles){
+		SDL_Rect attempt = position;
+		attempt.x = pos.x;
 		SDL_Rect collisionArea;
-		if(tile->collision(&position, &collisionArea)){
-			if(vel.y){
-				position.y -= (vel.y > 0 ? 1 : -1) * collisionArea.h;
-				pos.y = position.y;
-				vel.y = 0;
-			}
+		if(tile->collision(&attempt, &collisionArea)){
+			attempt.x = pos.x -= (vel.x > 0 ? 1 : -1) * collisionArea.w;
 		}
-		if(tile->collision(&position, &collisionArea)){
-			if(vel.x){
-				position.x -= (vel.x > 0 ? 1 : -1) * collisionArea.w;
-				pos.x = position.x;
-			}
+
+		attempt.y = pos.y;
+		if(tile->collision(&attempt, &collisionArea)){
+			pos.y -= (vel.y > 0 ? 1 : -1) * collisionArea.h;
+			vel.y = 0;
 		}
 	}
+	position.x = pos.x;
+	position.y = pos.y;
 
 	static unsigned framesElapsed = 0;
 	if(vel.x){
