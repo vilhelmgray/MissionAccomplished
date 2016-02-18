@@ -26,7 +26,7 @@
 
 #include "Player.h"
 
-Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Character(X, Y, textures){}
+Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture) : Character(X, Y, poses_textures, weapon_texture){}
 
 void Player::evaluate_event(SDL_Event *const event){
 	switch(event->type){

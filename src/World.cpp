@@ -91,8 +91,14 @@ void World::loadFiles(const std::string& mapFilePath){
 
 	mapFile.open(mapFilePath);
 
+	unsigned x;
+	mapFile >> x;
+	unsigned y;
+	mapFile >> y;
+
 	unsigned numPoses;
 	mapFile >> numPoses;
+	ImageSystem imgsys;
 	std::vector<std::shared_ptr<Texture>> poses;
 	for(unsigned i = 0; i < numPoses; i++){
 		std::string poseFilePath;
@@ -101,16 +107,14 @@ void World::loadFiles(const std::string& mapFilePath){
 		poses.emplace_back(new Texture(windrend.renderer, poseFilePath.c_str()));
 	}
 
-	unsigned x;
-	mapFile >> x;
-	unsigned y;
-	mapFile >> y;
-	player = std::unique_ptr<Player>(new Player(x, y, poses));
+	std::string weaponFilePath;
+	mapFile >> weaponFilePath;
+	std::shared_ptr<Texture> weapon = std::shared_ptr<Texture>(new Texture(windrend.renderer, weaponFilePath.c_str()));
+
+	player = std::unique_ptr<Player>(new Player(x, y, poses, weapon));
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
-
-	ImageSystem imgsys;
 	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, bgFilePath.c_str()));
 
 	unsigned numTiles;

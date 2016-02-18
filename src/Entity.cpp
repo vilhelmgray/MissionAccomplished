@@ -25,7 +25,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const unsigned isSolid) : tex(texture), face(), solid(isSolid) {
+Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const unsigned isSolid) : tex(texture), angle(), face(), solid(isSolid) {
 	sprite.x = 0;
 	sprite.y = 0;
 	sprite.w = 32;
@@ -44,7 +44,7 @@ bool Entity::collision(const SDL_Rect *const agent, SDL_Rect *const collisionAre
 void Entity::draw(SDL_Renderer *const rend){
 	SDL_RendererFlip flip = (face) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE; 
 
-	if(SDL_RenderCopyEx(rend, tex->texture, &sprite, &position, 0, NULL, flip) < 0){
+	if(SDL_RenderCopyEx(rend, tex->texture, &sprite, &position, angle, nullptr, flip) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 }

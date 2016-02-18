@@ -1,4 +1,4 @@
-/* Copyright (C) 2015 William Breathitt Gray
+/* Copyright (C) 2016 William Breathitt Gray
  *
  * This file is part of Mission Accomplished.
  *
@@ -16,20 +16,22 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef WEAPON_H
+#define WEAPON_H
 
 #include <memory>
-#include <vector>
 
-#include "Character.h"
+#include "SDL.h"
+
+#include "Entity.h"
 #include "Texture.h"
 
-class Player: public Character{
+class Weapon: public Entity{
 	public:
-		Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures, std::shared_ptr<Texture> weapon_texture);
+		Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture);
 
-		void evaluate_event(SDL_Event *const event);
+		void draw(SDL_Renderer *const rend);
+		void tick(const unsigned X, const unsigned Y);
 };
 
 #endif

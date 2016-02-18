@@ -23,18 +23,22 @@
 
 #include "Entity.h"
 #include "Texture.h"
+#include "Weapon.h"
 
 #include "Character.h"
 
-Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures) : Entity(X, Y, textures[0], 1), pose(), poses(textures), vel() {
+Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture) : Entity(X, Y, poses_textures[0], 1), pose(), poses(poses_textures), vel() {
 	pos.x = position.x;
 	pos.y = position.y;
+
+	weapon = std::unique_ptr<Weapon>(new Weapon(position.x, position.y, weapon_texture));
 }
 
 void Character::draw(SDL_Renderer *const rend){
 	tex = poses[pose];
 
 	Entity::draw(rend);
+	weapon->draw(rend);
 }
 
 void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps){
@@ -72,4 +76,6 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		pose = 0;
 		framesElapsed = 0;
 	}
+
+	weapon->tick(position.x, position.y);
 }

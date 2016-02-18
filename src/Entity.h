@@ -32,6 +32,7 @@ class Entity{
 
 		std::shared_ptr<Texture> tex;
 
+		double angle;
 		unsigned face;
 		unsigned solid;
 

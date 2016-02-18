@@ -26,11 +26,14 @@
 
 #include "Entity.h"
 #include "Texture.h"
+#include "Weapon.h"
 
 class Character: public Entity{
 	protected:
 		std::vector<std::shared_ptr<Texture>>::size_type pose;
 		std::vector<std::shared_ptr<Texture>> poses;
+
+		std::shared_ptr<Weapon> weapon;
 
 		struct{
 			double x;
@@ -38,7 +41,7 @@ class Character: public Entity{
 		} vel, pos;
 
 	public:
-		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures);
+		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture);
 
 		void draw(SDL_Renderer *const rend);
 		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps);
