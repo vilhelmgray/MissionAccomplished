@@ -36,8 +36,8 @@ Reticle::Reticle(std::shared_ptr<Texture> texture) : Entity(0, 0, texture, 0) {
 }
 
 double Reticle::getBearing(const SDL_Rect *const point){
-	const double pi = 3.14159265358979323846;
-	return std::atan2(position.y - point->y, position.x - point->x) * 180 / pi;
+	const double rads2deg = 57.29577951308232087679;
+	return std::atan2(position.y - point->y, position.x - point->x) * rads2deg;
 }
 
 void Reticle::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
