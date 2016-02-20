@@ -16,6 +16,7 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <cmath>
 #include <memory>
 
 #include "SDL.h"
@@ -32,6 +33,11 @@ Reticle::Reticle(std::shared_ptr<Texture> texture) : Entity(0, 0, texture, 0) {
 
 	position.x = x - 16;
 	position.y = y - 16;
+}
+
+double Reticle::getBearing(const SDL_Rect *const point){
+	const double pi = 3.14159265358979323846;
+	return std::atan2(position.y - point->y, position.x - point->x) * 180 / pi;
 }
 
 void Reticle::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){

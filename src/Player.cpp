@@ -29,7 +29,7 @@
 #include "Player.h"
 
 Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> reticle_texture) : Character(X, Y, poses_textures, weapon_texture) {
-	reticle = std::unique_ptr<Reticle>(new Reticle(reticle_texture));
+	reticle = std::shared_ptr<Reticle>(new Reticle(reticle_texture));
 }
 
 void Player::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
@@ -70,8 +70,8 @@ void Player::evaluate_event(const SDL_Event *const event){
 	}
 }
 
-void Player::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera){
-	Character::tick(tiles, fps, camera);
+void Player::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> dummy_reticle){
+	Character::tick(tiles, fps, camera, reticle);
 
 	const int new_camera_x = position.x - camera.aperture.w/2;
 	if(new_camera_x < 0){

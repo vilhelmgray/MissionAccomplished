@@ -18,22 +18,17 @@
  */
 #include <memory>
 
-#include "SDL.h"
-
 #include "Entity.h"
+#include "Reticle.h"
 #include "Texture.h"
 
 #include "Weapon.h"
 
 Weapon::Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture) : Entity(X, Y, weapon_texture, 0) {}
 
-void Weapon::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
-	angle = 45;
-
-	Entity::draw(rend, aperture);
-}
-
-void Weapon::tick(const unsigned X, const unsigned Y){
+void Weapon::tick(const unsigned X, const unsigned Y, std::shared_ptr<Reticle> reticle){
 	position.x = X;
 	position.y = Y;
+
+	angle = (reticle) ? reticle->getBearing(&position) : 0;
 }

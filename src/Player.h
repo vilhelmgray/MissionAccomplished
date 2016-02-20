@@ -30,13 +30,13 @@
 #include "Texture.h"
 
 class Player: public Character{
-		std::unique_ptr<Reticle> reticle;
+		std::shared_ptr<Reticle> reticle;
 	public:
 		Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> reticle_texture);
 
 		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
 		void evaluate_event(const SDL_Event *const event);
-		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera);
+		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> dummy_reticle);
 };
 
 #endif

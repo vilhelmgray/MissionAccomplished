@@ -26,6 +26,7 @@
 
 #include "Camera.h"
 #include "Entity.h"
+#include "Reticle.h"
 #include "Texture.h"
 #include "Weapon.h"
 
@@ -45,7 +46,7 @@ class Character: public Entity{
 		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture);
 
 		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera);
+		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle);
 };
 
 #endif

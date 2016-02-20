@@ -28,6 +28,7 @@ class Reticle: public Entity{
 	public:
 		Reticle(std::shared_ptr<Texture> texture);
 
+		double getBearing(const SDL_Rect *const point);
 		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
 		void evaluate_event(const SDL_Event *const event);
 };

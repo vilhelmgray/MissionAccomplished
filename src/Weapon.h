@@ -21,17 +21,15 @@
 
 #include <memory>
 
-#include "SDL.h"
-
 #include "Entity.h"
+#include "Reticle.h"
 #include "Texture.h"
 
 class Weapon: public Entity{
 	public:
 		Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture);
 
-		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		void tick(const unsigned X, const unsigned Y);
+		void tick(const unsigned X, const unsigned Y, std::shared_ptr<Reticle> reticle);
 };
 
 #endif

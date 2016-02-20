@@ -163,7 +163,7 @@ bool World::tick(const unsigned fps){
 		return true;
 	}
 
-	player->tick(tiles, fps, camera);
+	player->tick(tiles, fps, camera, nullptr);
 
 	draw();
 
