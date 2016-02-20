@@ -40,7 +40,7 @@ void Reticle::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 	}
 }
 
-void Reticle::evaluate_event(const SDL_Event *const event, const SDL_Rect *const aperture){
+void Reticle::evaluate_event(const SDL_Event *const event){
 	if(event->type == SDL_MOUSEMOTION){
 		position.x = event->motion.x - 16;
 		position.y = event->motion.y - 16;
