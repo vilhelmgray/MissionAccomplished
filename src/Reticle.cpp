@@ -16,36 +16,27 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef CHARACTER_H
-#define CHARACTER_H
-
 #include <memory>
-#include <vector>
 
 #include "SDL.h"
 
-#include "Camera.h"
 #include "Entity.h"
 #include "Texture.h"
-#include "Weapon.h"
 
-class Character: public Entity{
-	protected:
-		std::vector<std::shared_ptr<Texture>>::size_type pose;
-		std::vector<std::shared_ptr<Texture>> poses;
+#include "Reticle.h"
 
-		std::shared_ptr<Weapon> weapon;
+Reticle::Reticle(std::shared_ptr<Texture> texture) : Entity(0, 0, texture, 0) {
+	int x;
+	int y;
+	SDL_GetMouseState(&x, &y);
 
-		struct{
-			double x;
-			double y;
-		} vel, pos;
+	position.x = x - 16;
+	position.y = y - 16;
+}
 
-	public:
-		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture);
-
-		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera);
-};
-
-#endif
+void Reticle::evaluate_event(const SDL_Event *const event){
+	if(event->type == SDL_MOUSEMOTION){
+		position.x = event->motion.x - 16;
+		position.y = event->motion.y - 16;
+	}
+}

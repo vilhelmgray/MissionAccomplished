@@ -79,6 +79,9 @@ bool World::handleEvents(){
 
 				player->evaluate_event(&event);
 				break;
+			case SDL_MOUSEMOTION:
+				player->evaluate_event(&event);
+				break;
 			case SDL_QUIT:
 				return true;
 		}
@@ -113,7 +116,11 @@ void World::loadFiles(const std::string& mapFilePath){
 	mapFile >> weaponFilePath;
 	std::shared_ptr<Texture> weapon = std::shared_ptr<Texture>(new Texture(windrend.renderer, weaponFilePath.c_str()));
 
-	player = std::unique_ptr<Player>(new Player(x, y, poses, weapon));
+	std::string reticleFilePath;
+	mapFile >> reticleFilePath;
+	std::shared_ptr<Texture> reticle = std::shared_ptr<Texture>(new Texture(windrend.renderer, reticleFilePath.c_str()));
+
+	player = std::unique_ptr<Player>(new Player(x, y, poses, weapon, reticle));
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;

@@ -16,36 +16,19 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#ifndef RETICLE_H
+#define RETICLE_H
 
 #include <memory>
-#include <vector>
 
-#include "SDL.h"
-
-#include "Camera.h"
 #include "Entity.h"
 #include "Texture.h"
-#include "Weapon.h"
 
-class Character: public Entity{
-	protected:
-		std::vector<std::shared_ptr<Texture>>::size_type pose;
-		std::vector<std::shared_ptr<Texture>> poses;
-
-		std::shared_ptr<Weapon> weapon;
-
-		struct{
-			double x;
-			double y;
-		} vel, pos;
-
+class Reticle: public Entity{
 	public:
-		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture);
+		Reticle(std::shared_ptr<Texture> texture);
 
-		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera);
+		void evaluate_event(const SDL_Event *const event);
 };
 
 #endif

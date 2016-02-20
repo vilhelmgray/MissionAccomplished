@@ -23,13 +23,21 @@
 
 #include "Camera.h"
 #include "Character.h"
+#include "Reticle.h"
 #include "Texture.h"
 
 #include "Player.h"
 
-Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture) : Character(X, Y, poses_textures, weapon_texture){}
+Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> reticle_texture) : Character(X, Y, poses_textures, weapon_texture) {
+	reticle = std::unique_ptr<Reticle>(new Reticle(reticle_texture));
+}
 
-void Player::evaluate_event(SDL_Event *const event){
+void Player::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
+	Character::draw(rend, aperture);
+	reticle->draw(rend, aperture);
+}
+
+void Player::evaluate_event(const SDL_Event *const event){
 	switch(event->type){
 		case SDL_KEYDOWN:
 			if(!event->key.repeat){
@@ -55,6 +63,9 @@ void Player::evaluate_event(SDL_Event *const event){
 					vel.x = 0;
 					break;
 			}
+			break;
+		case SDL_MOUSEMOTION:
+			reticle->evaluate_event(event);
 			break;
 	}
 }
