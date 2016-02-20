@@ -54,7 +54,7 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	if(SDL_RenderCopy(windrend.renderer, background->texture, &camera.aperture, NULL) < 0){
+	if(SDL_RenderCopy(windrend.renderer, background->texture, NULL, NULL) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
