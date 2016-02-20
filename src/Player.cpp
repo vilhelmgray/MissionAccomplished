@@ -37,7 +37,7 @@ void Player::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 	reticle->draw(rend, aperture);
 }
 
-void Player::evaluate_event(const SDL_Event *const event){
+void Player::evaluate_event(const SDL_Event *const event, const SDL_Rect *const aperture){
 	switch(event->type){
 		case SDL_KEYDOWN:
 			if(!event->key.repeat){
@@ -65,7 +65,7 @@ void Player::evaluate_event(const SDL_Event *const event){
 			}
 			break;
 		case SDL_MOUSEMOTION:
-			reticle->evaluate_event(event);
+			reticle->evaluate_event(event, aperture);
 			break;
 	}
 }

@@ -35,7 +35,7 @@ class Player: public Character{
 		Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> reticle_texture);
 
 		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		void evaluate_event(const SDL_Event *const event);
+		void evaluate_event(const SDL_Event *const event, const SDL_Rect *const aperture);
 		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera);
 };
 

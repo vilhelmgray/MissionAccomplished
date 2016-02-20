@@ -34,7 +34,13 @@ Reticle::Reticle(std::shared_ptr<Texture> texture) : Entity(0, 0, texture, 0) {
 	position.y = y - 16;
 }
 
-void Reticle::evaluate_event(const SDL_Event *const event){
+void Reticle::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
+	if(SDL_RenderCopy(rend, tex->texture, &sprite, &position) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+}
+
+void Reticle::evaluate_event(const SDL_Event *const event, const SDL_Rect *const aperture){
 	if(event->type == SDL_MOUSEMOTION){
 		position.x = event->motion.x - 16;
 		position.y = event->motion.y - 16;

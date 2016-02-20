@@ -77,10 +77,10 @@ bool World::handleEvents(){
 					return true;
 				}
 
-				player->evaluate_event(&event);
+				player->evaluate_event(&event, &camera.aperture);
 				break;
 			case SDL_MOUSEMOTION:
-				player->evaluate_event(&event);
+				player->evaluate_event(&event, &camera.aperture);
 				break;
 			case SDL_QUIT:
 				return true;
