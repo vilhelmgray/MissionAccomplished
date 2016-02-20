@@ -21,6 +21,7 @@
 
 #include "SDL.h"
 
+#include "Camera.h"
 #include "Character.h"
 #include "Texture.h"
 
@@ -55,5 +56,18 @@ void Player::evaluate_event(SDL_Event *const event){
 					break;
 			}
 			break;
+	}
+}
+
+void Player::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera){
+	Character::tick(tiles, fps, camera);
+
+	const int new_camera_x = position.x - camera.aperture.w/2;
+	if(new_camera_x < 0){
+		camera.aperture.x = 0;
+	}else if(new_camera_x > camera.max_x){
+		camera.aperture.x = camera.max_x;
+	}else{
+		camera.aperture.x = new_camera_x;
 	}
 }

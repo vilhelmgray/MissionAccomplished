@@ -31,12 +31,14 @@
 
 #include "World.h"
 
-World::World(const std::string& mapFilePath){
+World::World(const std::string& mapFilePath) : camera() {
 	if(SDL_ShowCursor(SDL_DISABLE) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	if(SDL_RenderSetLogicalSize(windrend.renderer, 640, 480) < 0){
+	camera.aperture.w = 640;
+	camera.aperture.h = 480;
+	if(SDL_RenderSetLogicalSize(windrend.renderer, camera.aperture.w, camera.aperture.h) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
@@ -52,15 +54,15 @@ void World::draw(){
 		throw std::runtime_error(SDL_GetError());
 	}
 
-	if(SDL_RenderCopy(windrend.renderer, background->texture, NULL, NULL) < 0){
+	if(SDL_RenderCopy(windrend.renderer, background->texture, &camera.aperture, NULL) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 
 	for(auto& tile : tiles){
-		tile->draw(windrend.renderer);
+		tile->draw(windrend.renderer, &camera.aperture);
 	}
 
-	player->draw(windrend.renderer);
+	player->draw(windrend.renderer, &camera.aperture);
 
 	SDL_RenderPresent(windrend.renderer);
 }
@@ -134,6 +136,10 @@ void World::loadFiles(const std::string& mapFilePath){
 	unsigned height;
 	mapFile >> height;
 
+	if(width*32 > camera.aperture.w){
+		camera.max_x = width*32 - camera.aperture.w;
+	}
+
 	for(y = 0; y < height; y++){
 		for(x = 0; x < width; x++){
 			unsigned id;
@@ -150,7 +156,7 @@ bool World::tick(const unsigned fps){
 		return true;
 	}
 
-	player->tick(tiles, fps);
+	player->tick(tiles, fps, camera);
 
 	draw();
 

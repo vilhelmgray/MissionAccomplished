@@ -22,6 +22,7 @@
 #include <memory>
 #include <vector>
 
+#include "Camera.h"
 #include "Character.h"
 #include "Texture.h"
 
@@ -30,6 +31,7 @@ class Player: public Character{
 		Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> textures, std::shared_ptr<Texture> weapon_texture);
 
 		void evaluate_event(SDL_Event *const event);
+		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera);
 };
 
 #endif

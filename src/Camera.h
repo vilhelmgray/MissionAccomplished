@@ -16,22 +16,15 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef WEAPON_H
-#define WEAPON_H
-
-#include <memory>
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include "SDL.h"
 
-#include "Entity.h"
-#include "Texture.h"
+struct Camera{
+	SDL_Rect aperture;
 
-class Weapon: public Entity{
-	public:
-		Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture);
-
-		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		void tick(const unsigned X, const unsigned Y);
+	int max_x;
 };
 
 #endif

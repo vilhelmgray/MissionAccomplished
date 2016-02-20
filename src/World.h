@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include "Camera.h"
 #include "Entity.h"
 #include "Player.h"
 #include "SimpleDirectLayer.h"
@@ -32,6 +33,8 @@
 class World{
 		SimpleDirectLayer sdl;
 		WindRend windrend;
+
+		Camera camera;
 
 		std::unique_ptr<Player> player;
 

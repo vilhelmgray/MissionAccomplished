@@ -21,6 +21,7 @@
 
 #include "SDL.h"
 
+#include "Camera.h"
 #include "Entity.h"
 #include "Texture.h"
 #include "Weapon.h"
@@ -34,14 +35,14 @@ Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared
 	weapon = std::unique_ptr<Weapon>(new Weapon(position.x, position.y, weapon_texture));
 }
 
-void Character::draw(SDL_Renderer *const rend){
+void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 	tex = poses[pose];
 
-	Entity::draw(rend);
-	weapon->draw(rend);
+	Entity::draw(rend, aperture);
+	weapon->draw(rend, aperture);
 }
 
-void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps){
+void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera){
 	vel.y += 160 / fps;
 
 	pos.x += vel.x / fps;
@@ -61,6 +62,15 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 			vel.y = 0;
 		}
 	}
+
+	const int x_bound_check = pos.x;
+	const int max_x = camera.max_x + camera.aperture.w - 32;
+	if(x_bound_check < 0){
+		pos.x = 0;
+	}else if(x_bound_check > max_x){
+		pos.x = max_x;
+	}
+
 	position.x = pos.x;
 	position.y = pos.y;
 

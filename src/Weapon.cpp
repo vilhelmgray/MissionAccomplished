@@ -27,10 +27,10 @@
 
 Weapon::Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture) : Entity(X, Y, weapon_texture, 0) {}
 
-void Weapon::draw(SDL_Renderer *const rend){
+void Weapon::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 	angle = 45;
 
-	Entity::draw(rend);
+	Entity::draw(rend, aperture);
 }
 
 void Weapon::tick(const unsigned X, const unsigned Y){

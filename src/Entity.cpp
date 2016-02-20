@@ -41,10 +41,12 @@ bool Entity::collision(const SDL_Rect *const agent, SDL_Rect *const collisionAre
 	return (solid) ? SDL_IntersectRect(agent, &position, collisionArea) : false;
 }
 
-void Entity::draw(SDL_Renderer *const rend){
+void Entity::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 	SDL_RendererFlip flip = (face) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE; 
 
-	if(SDL_RenderCopyEx(rend, tex->texture, &sprite, &position, angle, nullptr, flip) < 0){
+	SDL_Rect relative_position = position;
+	relative_position.x -= aperture->x;
+	if(SDL_RenderCopyEx(rend, tex->texture, &sprite, &relative_position, angle, nullptr, flip) < 0){
 		throw std::runtime_error(SDL_GetError());
 	}
 }
