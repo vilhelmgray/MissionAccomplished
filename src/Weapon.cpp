@@ -56,5 +56,11 @@ void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> r
 	position.x = x;
 	position.y = y;
 
-	angle = (reticle) ? reticle->getBearing(&position) : 0;
+	if(reticle){
+		SDL_Rect relative_position = position;
+		relative_position.x -= aperture->x;
+		relative_position.y -= aperture->y;
+
+		angle = reticle->getBearing(&relative_position);
+	}
 }
