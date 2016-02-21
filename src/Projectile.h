@@ -27,8 +27,13 @@
 #include "Texture.h"
 
 class Projectile: public Entity{
+		struct{
+			double x;
+			double y;
+		} pos;
+
 	public:
-		Projectile(const unsigned x, const unsigned y, const double angle, std::shared_ptr<Texture> tracer_texture);
+		Projectile(const double x, const double y, const double angle, std::shared_ptr<Texture> tracer_texture);
 
 		bool tick(const SDL_Rect *const aperture);
 };

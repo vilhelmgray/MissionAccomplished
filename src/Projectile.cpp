@@ -26,13 +26,16 @@
 
 #include "Projectile.h"
 
-Projectile::Projectile(const unsigned x, const unsigned y, const double angle, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, tracer_texture, angle, 1) {}
+Projectile::Projectile(const double x, const double y, const double angle, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, tracer_texture, angle, 1) {
+	pos.x = x;
+	pos.y = y;
+}
 
 bool Projectile::tick(const SDL_Rect *const aperture){
 	const double deg2rad = 0.01745329251994329576;
 
-	position.x += 10 * std::cos(angle * deg2rad);
-	position.y += 10 * std::sin(angle * deg2rad);
+	position.x = pos.x += 10 * std::cos(angle * deg2rad);
+	position.y = pos.y += 10 * std::sin(angle * deg2rad);
 
 	return (position.x < aperture->x || position.y < aperture->y || position.x > aperture->x + aperture->w || position.y > aperture->y + aperture->h) ? true : false;
 }
