@@ -16,7 +16,10 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <cmath>
 #include <memory>
+
+#include "SDL.h"
 
 #include "Entity.h"
 #include "Reticle.h"
@@ -24,11 +27,34 @@
 
 #include "Weapon.h"
 
-Weapon::Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture) : Entity(X, Y, weapon_texture, 0) {}
+Weapon::Weapon(const unsigned x, const unsigned y, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, weapon_texture, 0, 0), tracer(tracer_texture) {}
 
-void Weapon::tick(const unsigned X, const unsigned Y, std::shared_ptr<Reticle> reticle){
-	position.x = X;
-	position.y = Y;
+void Weapon::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
+	Entity::draw(rend, aperture);
+
+	for(auto& projectile : projectiles){
+		projectile->draw(rend, aperture);
+	}
+}
+
+void Weapon::fire(){
+	const double deg2rad = 0.01745329251994329576;
+	const double x = position.x + 32 * std::cos(angle * deg2rad);
+	const double y = position.y + 32 * std::sin(angle * deg2rad);
+
+	projectiles.emplace_back(new Projectile(x, y, angle, tracer));
+}
+
+void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture){
+	for(auto projectile = projectiles.begin(); projectile != projectiles.end(); projectile++){
+		if((*projectile)->tick(aperture)){
+			projectile = projectiles.erase(projectile);
+			projectile--;
+		}
+	}
+
+	position.x = x;
+	position.y = y;
 
 	angle = (reticle) ? reticle->getBearing(&position) : 0;
 }

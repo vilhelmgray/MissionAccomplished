@@ -16,27 +16,21 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
 
 #include <memory>
-#include <vector>
 
 #include "SDL.h"
 
-#include "Camera.h"
-#include "Character.h"
-#include "Reticle.h"
+#include "Entity.h"
 #include "Texture.h"
 
-class Player: public Character{
-		std::shared_ptr<Reticle> reticle;
+class Projectile: public Entity{
 	public:
-		Player(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture, std::shared_ptr<Texture> reticle_texture);
+		Projectile(const unsigned x, const unsigned y, const double angle, std::shared_ptr<Texture> tracer_texture);
 
-		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		void evaluate_event(const SDL_Event *const event);
-		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> dummy_reticle);
+		bool tick(const SDL_Rect *const aperture);
 };
 
 #endif

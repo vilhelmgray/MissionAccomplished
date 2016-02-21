@@ -28,7 +28,7 @@
 
 #include "Player.h"
 
-Player::Player(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> reticle_texture) : Character(X, Y, poses_textures, weapon_texture) {
+Player::Player(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture, std::shared_ptr<Texture> reticle_texture) : Character(x, y, poses_textures, weapon_texture, tracer_texture) {
 	reticle = std::shared_ptr<Reticle>(new Reticle(reticle_texture));
 }
 
@@ -66,6 +66,9 @@ void Player::evaluate_event(const SDL_Event *const event){
 			break;
 		case SDL_MOUSEMOTION:
 			reticle->evaluate_event(event);
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			weapon->fire();
 			break;
 	}
 }

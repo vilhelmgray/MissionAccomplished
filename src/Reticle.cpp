@@ -26,7 +26,7 @@
 
 #include "Reticle.h"
 
-Reticle::Reticle(std::shared_ptr<Texture> texture) : Entity(0, 0, texture, 0) {
+Reticle::Reticle(std::shared_ptr<Texture> texture) : Entity(0, 0, texture, 0, 0) {
 	int x;
 	int y;
 	SDL_GetMouseState(&x, &y);

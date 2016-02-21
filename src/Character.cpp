@@ -29,11 +29,11 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture) : Entity(X, Y, poses_textures[0], 1), pose(), poses(poses_textures), vel() {
+Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), vel() {
 	pos.x = position.x;
 	pos.y = position.y;
 
-	weapon = std::unique_ptr<Weapon>(new Weapon(position.x, position.y, weapon_texture));
+	weapon = std::unique_ptr<Weapon>(new Weapon(position.x, position.y, weapon_texture, tracer_texture));
 }
 
 void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
@@ -88,5 +88,5 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		framesElapsed = 0;
 	}
 
-	weapon->tick(position.x, position.y, reticle);
+	weapon->tick(position.x, position.y, reticle, &camera.aperture);
 }

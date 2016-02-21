@@ -25,7 +25,7 @@
 
 #include "Entity.h"
 
-Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const unsigned isSolid) : tex(texture), angle(), face(), solid(isSolid) {
+Entity::Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const double angle, const unsigned isSolid) : tex(texture), angle(angle), face(), solid(isSolid) {
 	sprite.x = 0;
 	sprite.y = 0;
 	sprite.w = 32;

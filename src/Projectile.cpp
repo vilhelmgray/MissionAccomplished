@@ -16,27 +16,23 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#ifndef PLAYER_H
-#define PLAYER_H
-
+#include <cmath>
 #include <memory>
-#include <vector>
 
 #include "SDL.h"
 
-#include "Camera.h"
-#include "Character.h"
-#include "Reticle.h"
+#include "Entity.h"
 #include "Texture.h"
 
-class Player: public Character{
-		std::shared_ptr<Reticle> reticle;
-	public:
-		Player(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture, std::shared_ptr<Texture> reticle_texture);
+#include "Projectile.h"
 
-		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		void evaluate_event(const SDL_Event *const event);
-		void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> dummy_reticle);
-};
+Projectile::Projectile(const unsigned x, const unsigned y, const double angle, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, tracer_texture, angle, 1) {}
 
-#endif
+bool Projectile::tick(const SDL_Rect *const aperture){
+	const double deg2rad = 0.01745329251994329576;
+
+	position.x += 10 * std::cos(angle * deg2rad);
+	position.y += 10 * std::sin(angle * deg2rad);
+
+	return (position.x < aperture->x || position.y < aperture->y || position.x > aperture->x + aperture->w || position.y > aperture->y + aperture->h) ? true : false;
+}

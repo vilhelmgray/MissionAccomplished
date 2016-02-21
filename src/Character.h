@@ -35,7 +35,7 @@ class Character: public Entity{
 		std::vector<std::shared_ptr<Texture>>::size_type pose;
 		std::vector<std::shared_ptr<Texture>> poses;
 
-		std::shared_ptr<Weapon> weapon;
+		std::unique_ptr<Weapon> weapon;
 
 		struct{
 			double x;
@@ -43,7 +43,7 @@ class Character: public Entity{
 		} vel, pos;
 
 	public:
-		Character(const unsigned X, const unsigned Y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture);
+		Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture);
 
 		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
 		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle);

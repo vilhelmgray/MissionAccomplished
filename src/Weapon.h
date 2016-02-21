@@ -19,17 +19,26 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include <list>
 #include <memory>
 
+#include "SDL.h"
+
 #include "Entity.h"
+#include "Projectile.h"
 #include "Reticle.h"
 #include "Texture.h"
 
 class Weapon: public Entity{
-	public:
-		Weapon(const unsigned X, const unsigned Y, std::shared_ptr<Texture> weapon_texture);
+		std::list<std::shared_ptr<Projectile>> projectiles;
 
-		void tick(const unsigned X, const unsigned Y, std::shared_ptr<Reticle> reticle);
+		std::shared_ptr<Texture> tracer;
+	public:
+		Weapon(const unsigned x, const unsigned y, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture);
+
+		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
+		void fire();
+		void tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture);
 };
 
 #endif

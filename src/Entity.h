@@ -37,7 +37,7 @@ class Entity{
 		unsigned solid;
 
 	public:
-		Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const unsigned isSolid);
+		Entity(const unsigned X, const unsigned Y, std::shared_ptr<Texture> texture, const double angle, const unsigned isSolid);
 
 		bool collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea);
 		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
