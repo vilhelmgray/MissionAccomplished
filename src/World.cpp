@@ -112,15 +112,21 @@ void World::loadFiles(const std::string& mapFilePath){
 		poses.emplace_back(new Texture(windrend.renderer, poseFilePath.c_str()));
 	}
 
-	std::string weaponFilePath;
-	mapFile >> weaponFilePath;
-	std::shared_ptr<Texture> weapon = std::shared_ptr<Texture>(new Texture(windrend.renderer, weaponFilePath.c_str()));
+	unsigned numWeapons;
+	mapFile >> numWeapons;
+	std::vector<std::shared_ptr<Texture>> weapons;
+	for(unsigned i = 0; i < numWeapons; i++){
+		std::string weaponFilePath;
+		mapFile >> weaponFilePath;
+
+		weapons.emplace_back(new Texture(windrend.renderer, weaponFilePath.c_str()));
+	}
 
 	std::string reticleFilePath;
 	mapFile >> reticleFilePath;
 	std::shared_ptr<Texture> reticle = std::shared_ptr<Texture>(new Texture(windrend.renderer, reticleFilePath.c_str()));
 
-	player = std::unique_ptr<Player>(new Player(x, y, poses, weapon, reticle));
+	player = std::unique_ptr<Player>(new Player(x, y, poses, weapons[0], reticle));
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
