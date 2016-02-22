@@ -30,11 +30,20 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), vel() {
+Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), vel(), hp(100) {
 	pos.x = position.x;
 	pos.y = position.y;
 
 	weapon = std::unique_ptr<Weapon>(new Weapon(position.x, position.y, weapon_texture, tracer_texture));
+}
+
+bool Character::collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea){
+	if(Entity::collision(agent, collisionArea)){
+		hp -= 20;
+		return true;
+	}
+
+	return false;
 }
 
 void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
