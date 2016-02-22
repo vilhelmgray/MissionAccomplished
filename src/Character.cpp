@@ -88,5 +88,5 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		framesElapsed = 0;
 	}
 
-	weapon->tick(position.x, position.y, reticle, &camera.aperture);
+	weapon->tick(position.x, position.y, reticle, &camera.aperture, tiles);
 }

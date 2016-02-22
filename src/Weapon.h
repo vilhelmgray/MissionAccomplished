@@ -21,6 +21,7 @@
 
 #include <list>
 #include <memory>
+#include <vector>
 
 #include "SDL.h"
 
@@ -38,7 +39,7 @@ class Weapon: public Entity{
 
 		void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
 		void fire();
-		void tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture);
+		void tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles);
 };
 
 #endif

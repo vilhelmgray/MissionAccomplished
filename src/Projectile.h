@@ -20,6 +20,7 @@
 #define PROJECTILE_H
 
 #include <memory>
+#include <vector>
 
 #include "SDL.h"
 
@@ -35,7 +36,7 @@ class Projectile: public Entity{
 	public:
 		Projectile(const double x, const double y, const double angle, std::shared_ptr<Texture> tracer_texture);
 
-		bool tick(const SDL_Rect *const aperture);
+		bool tick(const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles);
 };
 
 #endif

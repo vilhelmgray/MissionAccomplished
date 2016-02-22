@@ -18,6 +18,7 @@
  */
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include "SDL.h"
 
@@ -45,9 +46,9 @@ void Weapon::fire(){
 	projectiles.emplace_back(new Projectile(x, y, angle, tracer));
 }
 
-void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture){
+void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles){
 	for(auto projectile = projectiles.begin(); projectile != projectiles.end(); projectile++){
-		if((*projectile)->tick(aperture)){
+		if((*projectile)->tick(aperture, tiles)){
 			projectile = projectiles.erase(projectile);
 			projectile--;
 		}

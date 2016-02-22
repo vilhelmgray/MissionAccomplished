@@ -18,6 +18,7 @@
  */
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include "SDL.h"
 
@@ -31,11 +32,18 @@ Projectile::Projectile(const double x, const double y, const double angle, std::
 	pos.y = y;
 }
 
-bool Projectile::tick(const SDL_Rect *const aperture){
+bool Projectile::tick(const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles){
 	const double deg2rad = 0.01745329251994329576;
 
 	position.x = pos.x += 10 * std::cos(angle * deg2rad);
 	position.y = pos.y += 10 * std::sin(angle * deg2rad);
+
+	for(auto& tile : tiles){
+		SDL_Rect collisionArea;
+		if(tile->collision(&position, &collisionArea)){
+			return true;
+		}
+	}
 
 	return (position.x < aperture->x || position.y < aperture->y || position.x > aperture->x + aperture->w || position.y > aperture->y + aperture->h) ? true : false;
 }
