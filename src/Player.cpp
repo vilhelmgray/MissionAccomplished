@@ -74,7 +74,7 @@ void Player::evaluate_event(const SDL_Event *const event){
 	}
 }
 
-void Player::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> dummy_reticle, std::list<std::shared_ptr<Character>>& enemies){
+bool Player::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> dummy_reticle, std::list<std::shared_ptr<Character>>& enemies){
 	Character::tick(tiles, fps, camera, reticle, enemies);
 
 	const int new_camera_x = position.x - camera.aperture.w/2;

@@ -52,7 +52,7 @@ class Character: public Entity{
 
 		bool collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea);
 		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies);
+		virtual bool tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies);
 };
 
 #endif

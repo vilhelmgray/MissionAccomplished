@@ -213,6 +213,14 @@ bool World::tick(const unsigned fps){
 	std::list<std::shared_ptr<Character>> ticked_enemies(enemies.begin(), enemies.end());
 	player->tick(tiles, fps, camera, nullptr, ticked_enemies);
 
+	std::list<std::shared_ptr<Character>> ticked_player{player};
+	for(auto enemy = enemies.begin(); enemy != enemies.end(); enemy++){
+		if((*enemy)->tick(tiles, fps, camera, nullptr, ticked_player)){
+			enemy = enemies.erase(enemy);
+			enemy--;
+		}
+	}
+
 	draw();
 
 	return false;
