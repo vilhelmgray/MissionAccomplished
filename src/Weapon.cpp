@@ -17,11 +17,13 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include <cmath>
+#include <list>
 #include <memory>
 #include <vector>
 
 #include "SDL.h"
 
+#include "Character.h"
 #include "Entity.h"
 #include "Reticle.h"
 #include "Texture.h"
@@ -46,9 +48,9 @@ void Weapon::fire(){
 	projectiles.emplace_back(new Projectile(x, y, angle, tracer));
 }
 
-void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles){
+void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles, std::list<std::shared_ptr<Character>>& enemies){
 	for(auto projectile = projectiles.begin(); projectile != projectiles.end(); projectile++){
-		if((*projectile)->tick(aperture, tiles)){
+		if((*projectile)->tick(aperture, tiles, enemies)){
 			projectile = projectiles.erase(projectile);
 			projectile--;
 		}

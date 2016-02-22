@@ -16,6 +16,7 @@
  * along with Mission Accomplished.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <list>
 #include <memory>
 #include <vector>
 
@@ -43,7 +44,7 @@ void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 	weapon->draw(rend, aperture);
 }
 
-void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle){
+void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies){
 	vel.y += 160 / fps;
 
 	pos.x += vel.x / fps;
@@ -88,5 +89,5 @@ void Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		framesElapsed = 0;
 	}
 
-	weapon->tick(position.x, position.y, reticle, &camera.aperture, tiles);
+	weapon->tick(position.x, position.y, reticle, &camera.aperture, tiles, enemies);
 }

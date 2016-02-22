@@ -19,11 +19,13 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <list>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "Camera.h"
+#include "Enemy.h"
 #include "Entity.h"
 #include "Player.h"
 #include "SimpleDirectLayer.h"
@@ -36,7 +38,8 @@ class World{
 
 		Camera camera;
 
-		std::unique_ptr<Player> player;
+		std::shared_ptr<Player> player;
+		std::list<std::shared_ptr<Enemy>> enemies;
 
 		std::unique_ptr<Texture> background;
 		std::vector<std::shared_ptr<Texture>> tile_textures;

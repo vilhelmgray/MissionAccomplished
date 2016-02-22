@@ -19,6 +19,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include <list>
 #include <memory>
 #include <vector>
 
@@ -29,6 +30,8 @@
 #include "Reticle.h"
 #include "Texture.h"
 #include "Weapon.h"
+
+class Weapon;
 
 class Character: public Entity{
 	protected:
@@ -46,7 +49,7 @@ class Character: public Entity{
 		Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture);
 
 		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
-		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle);
+		virtual void tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies);
 };
 
 #endif

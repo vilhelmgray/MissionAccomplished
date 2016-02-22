@@ -17,6 +17,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include <fstream>
+#include <list>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -24,6 +25,8 @@
 
 #include "SDL.h"
 
+#include "Character.h"
+#include "Enemy.h"
 #include "Entity.h"
 #include "Player.h"
 #include "ImageSystem.h"
@@ -60,6 +63,10 @@ void World::draw(){
 
 	for(auto& tile : tiles){
 		tile->draw(windrend.renderer, &camera.aperture);
+	}
+
+	for(auto& enemy : enemies){
+		enemy->draw(windrend.renderer, &camera.aperture);
 	}
 
 	player->draw(windrend.renderer, &camera.aperture);
@@ -102,15 +109,23 @@ void World::loadFiles(const std::string& mapFilePath){
 	unsigned y;
 	mapFile >> y;
 
-	unsigned numPoses;
-	mapFile >> numPoses;
 	ImageSystem imgsys;
-	std::vector<std::shared_ptr<Texture>> poses;
-	for(unsigned i = 0; i < numPoses; i++){
-		std::string poseFilePath;
-		mapFile >> poseFilePath;
+	unsigned numCharacterPoses;
+	mapFile >> numCharacterPoses;
+	std::vector<std::vector<std::shared_ptr<Texture>>> characterPoses;
+	for(unsigned i = 0; i < numCharacterPoses; i++){
+		std::vector<std::shared_ptr<Texture>> poses;
 
-		poses.emplace_back(new Texture(windrend.renderer, poseFilePath.c_str()));
+		unsigned numPoses;
+		mapFile >> numPoses;
+		for(unsigned j = 0; j < numPoses; j++){
+			std::string poseFilePath;
+			mapFile >> poseFilePath;
+
+			poses.emplace_back(new Texture(windrend.renderer, poseFilePath.c_str()));
+		}
+
+		characterPoses.push_back(poses);
 	}
 
 	unsigned numWeapons;
@@ -137,7 +152,22 @@ void World::loadFiles(const std::string& mapFilePath){
 	mapFile >> reticleFilePath;
 	std::shared_ptr<Texture> reticle = std::shared_ptr<Texture>(new Texture(windrend.renderer, reticleFilePath.c_str()));
 
-	player = std::unique_ptr<Player>(new Player(x, y, poses, weapons[0], tracers[0], reticle));
+	player = std::shared_ptr<Player>(new Player(x, y, characterPoses[0], weapons[0], tracers[0], reticle));
+
+	unsigned numEnemies;
+	mapFile >> numEnemies;
+	for(unsigned i = 0; i < numEnemies; i++){
+		mapFile >> x;
+		mapFile >> y;
+		unsigned poses;
+		mapFile >> poses;
+		unsigned weapon;
+		mapFile >> weapon;
+		unsigned tracer;
+		mapFile >> tracer;
+
+		enemies.emplace_back(new Enemy(x, y, characterPoses[poses], weapons[weapon], tracers[tracer]));
+	}
 
 	std::string bgFilePath;
 	mapFile >> bgFilePath;
@@ -180,7 +210,8 @@ bool World::tick(const unsigned fps){
 		return true;
 	}
 
-	player->tick(tiles, fps, camera, nullptr);
+	std::list<std::shared_ptr<Character>> ticked_enemies(enemies.begin(), enemies.end());
+	player->tick(tiles, fps, camera, nullptr, ticked_enemies);
 
 	draw();
 

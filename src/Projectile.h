@@ -19,13 +19,17 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
+#include <list>
 #include <memory>
 #include <vector>
 
 #include "SDL.h"
 
+#include "Character.h"
 #include "Entity.h"
 #include "Texture.h"
+
+class Character;
 
 class Projectile: public Entity{
 		struct{
@@ -36,7 +40,7 @@ class Projectile: public Entity{
 	public:
 		Projectile(const double x, const double y, const double angle, std::shared_ptr<Texture> tracer_texture);
 
-		bool tick(const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles);
+		bool tick(const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles, std::list<std::shared_ptr<Character>>& enemies);
 };
 
 #endif

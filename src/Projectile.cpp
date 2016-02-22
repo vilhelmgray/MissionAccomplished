@@ -17,11 +17,13 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include <cmath>
+#include <list>
 #include <memory>
 #include <vector>
 
 #include "SDL.h"
 
+#include "Character.h"
 #include "Entity.h"
 #include "Texture.h"
 
@@ -32,7 +34,7 @@ Projectile::Projectile(const double x, const double y, const double angle, std::
 	pos.y = y;
 }
 
-bool Projectile::tick(const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles){
+bool Projectile::tick(const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles, std::list<std::shared_ptr<Character>>& enemies){
 	const double deg2rad = 0.01745329251994329576;
 
 	position.x = pos.x += 10 * std::cos(angle * deg2rad);
@@ -41,6 +43,13 @@ bool Projectile::tick(const SDL_Rect *const aperture, std::vector<std::unique_pt
 	for(auto& tile : tiles){
 		SDL_Rect collisionArea;
 		if(tile->collision(&position, &collisionArea)){
+			return true;
+		}
+	}
+
+	for(auto& enemy : enemies){
+		SDL_Rect collisionArea;
+		if(enemy->collision(&position, &collisionArea)){
 			return true;
 		}
 	}
