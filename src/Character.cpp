@@ -51,6 +51,18 @@ void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 
 	Entity::draw(rend, aperture);
 	weapon->draw(rend, aperture);
+
+	Uint8 r, g, b, a;
+	SDL_GetRenderDrawColor(rend, &r, &g, &b, &a);
+
+	SDL_Rect hp_bar = { position.x - aperture->x + 16, position.y - 16, 16, 4};
+	SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
+	SDL_RenderFillRect(rend, &hp_bar);
+	hp_bar.w *= hp/100.0;
+	SDL_SetRenderDrawColor(rend, 0, 255, 0, 255);
+	SDL_RenderFillRect(rend, &hp_bar);
+
+	SDL_SetRenderDrawColor(rend, r, g, b, a);
 }
 
 void Character::jump(){
