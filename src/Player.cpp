@@ -47,11 +47,9 @@ void Player::evaluate_event(const SDL_Event *const event){
 						vel.y = -160;
 						break;
 					case SDLK_a:
-						face = 1;
 						vel.x = -60;
 						break;
 					case SDLK_d:
-						face = 0;
 						vel.x = 60;
 						break;
 				}

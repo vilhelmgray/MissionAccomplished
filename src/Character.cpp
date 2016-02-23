@@ -58,6 +58,12 @@ bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		return true;
 	}
 
+	if(vel.x){
+		face = 0;
+	}else if(vel.x < 0){
+		face = 1;
+	}
+
 	vel.y += 160 / fps;
 
 	pos.x += vel.x / fps;
