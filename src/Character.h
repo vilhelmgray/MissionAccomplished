@@ -45,7 +45,7 @@ class Character: public Entity{
 			double y;
 		} vel, pos;
 
-		int hp;
+		unsigned hp;
 
 	public:
 		Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture);

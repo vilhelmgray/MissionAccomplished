@@ -39,7 +39,7 @@ Character::Character(const unsigned x, const unsigned y, std::vector<std::shared
 
 bool Character::collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea){
 	if(Entity::collision(agent, collisionArea)){
-		hp -= 20;
+		hp = (hp <= 20) ? 0 : hp - 20;
 		return true;
 	}
 
@@ -54,7 +54,7 @@ void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 }
 
 bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies){
-	if(hp <= 0){
+	if(!hp){
 		return true;
 	}
 
