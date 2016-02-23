@@ -27,7 +27,7 @@
 int main(){
 	std::cout << "Please enter the map file path: ";
 	std::string mapFilePath;
-	std::cin >> mapFilePath;
+	std::getline(std::cin, mapFilePath);
 
 	try{
 		World world(mapFilePath);

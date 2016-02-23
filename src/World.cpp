@@ -19,6 +19,7 @@
 #include <fstream>
 #include <list>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -125,23 +126,26 @@ void World::loadFiles(const std::string& mapFilePath){
 
 	mapFile.open(mapFilePath);
 
+	std::string buffer;
+	std::getline(mapFile, buffer);
 	unsigned x;
-	mapFile >> x;
 	unsigned y;
-	mapFile >> y;
+	std::istringstream(buffer) >> x >> y;
 
-	ImageSystem imgsys;
+	std::getline(mapFile, buffer);
 	unsigned numCharacterPoses;
-	mapFile >> numCharacterPoses;
+	std::istringstream(buffer) >> numCharacterPoses;
+	ImageSystem imgsys;
 	std::vector<std::vector<std::shared_ptr<Texture>>> characterPoses;
 	for(unsigned i = 0; i < numCharacterPoses; i++){
 		std::vector<std::shared_ptr<Texture>> poses;
 
+		std::getline(mapFile, buffer);
 		unsigned numPoses;
-		mapFile >> numPoses;
+		std::istringstream(buffer) >> numPoses;
 		for(unsigned j = 0; j < numPoses; j++){
 			std::string poseFilePath;
-			mapFile >> poseFilePath;
+			std::getline(mapFile, poseFilePath);
 
 			poses.emplace_back(new Texture(windrend.renderer, poseFilePath.c_str()));
 		}
@@ -149,76 +153,77 @@ void World::loadFiles(const std::string& mapFilePath){
 		characterPoses.push_back(poses);
 	}
 
+	std::getline(mapFile, buffer);
 	unsigned numWeapons;
-	mapFile >> numWeapons;
+	std::istringstream(buffer) >> numWeapons;
 	std::vector<std::shared_ptr<Texture>> weapons;
 	for(unsigned i = 0; i < numWeapons; i++){
 		std::string weaponFilePath;
-		mapFile >> weaponFilePath;
+		std::getline(mapFile, weaponFilePath);
 
 		weapons.emplace_back(new Texture(windrend.renderer, weaponFilePath.c_str()));
 	}
 
+	std::getline(mapFile, buffer);
 	unsigned numTracers;
-	mapFile >> numTracers;
+	std::istringstream(buffer) >> numTracers;
 	std::vector<std::shared_ptr<Texture>> tracers;
 	for(unsigned i = 0; i < numTracers; i++){
 		std::string tracerFilePath;
-		mapFile >> tracerFilePath;
+		std::getline(mapFile, tracerFilePath);
 
 		tracers.emplace_back(new Texture(windrend.renderer, tracerFilePath.c_str()));
 	}
 
 	std::string reticleFilePath;
-	mapFile >> reticleFilePath;
+	std::getline(mapFile, reticleFilePath);
 	std::shared_ptr<Texture> reticle = std::shared_ptr<Texture>(new Texture(windrend.renderer, reticleFilePath.c_str()));
 
 	player = std::shared_ptr<Player>(new Player(x, y, characterPoses[0], weapons[0], tracers[0], reticle));
 
+	std::getline(mapFile, buffer);
 	unsigned numEnemies;
-	mapFile >> numEnemies;
+	std::istringstream(buffer) >> numEnemies;
 	for(unsigned i = 0; i < numEnemies; i++){
-		mapFile >> x;
-		mapFile >> y;
+		std::getline(mapFile, buffer);
 		unsigned poses;
-		mapFile >> poses;
 		unsigned weapon;
-		mapFile >> weapon;
 		unsigned tracer;
-		mapFile >> tracer;
+		std::istringstream(buffer) >> x >> y >> poses >> weapon >> tracer;
 
 		enemies.emplace_back(new Enemy(x, y, characterPoses[poses], weapons[weapon], tracers[tracer]));
 	}
 
 	std::string bgFilePath;
-	mapFile >> bgFilePath;
+	std::getline(mapFile, bgFilePath);
 	background = std::unique_ptr<Texture>(new Texture(windrend.renderer, bgFilePath.c_str()));
 
+	std::getline(mapFile, buffer);
 	unsigned numTiles;
-	mapFile >> numTiles;
+	unsigned solidTiles;
+	std::istringstream(buffer) >> numTiles >> solidTiles;
 	for(unsigned i = 0; i < numTiles; i++){
 		std::string tileFilePath;
-		mapFile >> tileFilePath;
+		std::getline(mapFile, tileFilePath);
 
 		tile_textures.emplace_back(new Texture(windrend.renderer, tileFilePath.c_str()));
 	}
 
-	unsigned solidTiles;
-	mapFile >> solidTiles;
-
+	std::getline(mapFile, buffer);
 	unsigned width;
-	mapFile >> width;
 	unsigned height;
-	mapFile >> height;
+	std::istringstream(buffer) >> width >> height;
 
 	if(width*32 > camera.aperture.w){
 		camera.max_x = width*32 - camera.aperture.w;
 	}
 
 	for(y = 0; y < height; y++){
+		std::getline(mapFile, buffer);
+		std::istringstream iss(buffer);
 		for(x = 0; x < width; x++){
 			unsigned id;
-			mapFile >> id;
+			iss >> id;
 			if(id){
 				tiles.emplace_back(new Entity(x*32, y*32, tile_textures[id-1], 0, id >= solidTiles));
 			}
@@ -226,7 +231,7 @@ void World::loadFiles(const std::string& mapFilePath){
 	}
 
 	std::string gameOverFilePath;
-	mapFile >> gameOverFilePath;
+	std::getline(mapFile, gameOverFilePath);
 	gameOverScreen = std::unique_ptr<Texture>(new Texture(windrend.renderer, gameOverFilePath.c_str()));
 }
 
