@@ -48,6 +48,10 @@ void Weapon::fire(){
 	projectiles.emplace_back(new Projectile(x, y, angle, tracer));
 }
 
+void Weapon::point(const double ang){
+	angle = ang;
+}
+
 void Weapon::tick(const unsigned x, const unsigned y, std::shared_ptr<Reticle> reticle, const SDL_Rect *const aperture, std::vector<std::unique_ptr<Entity>>& tiles, std::list<std::shared_ptr<Character>>& enemies){
 	for(auto projectile = projectiles.begin(); projectile != projectiles.end(); projectile++){
 		if((*projectile)->tick(aperture, tiles, enemies)){
