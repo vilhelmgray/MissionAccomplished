@@ -6,6 +6,111 @@ About
 Mission Accomplished is a simple side-scrolling shoot-'em-up implemented
 as a personal challenge to develop a video game from an original idea.
 
+The goal of the game is to defeat all the enemies on the level before
+your health bar turns completely red. The health bar for your character,
+as well as the enemies, appear above the respective character's sprite.
+Shoot projectiles at the enemies to injure them, and respectively avoid
+projectiles from the enemies to avoid damage.
+
+Controls
+--------
+'a' key		-	Accelerate right
+'d' key		-	Accelerate left
+SPACE key	-	Jump
+Mouse motion	-	Aim reticle
+Mouse button	-	Fire projectile
+
+Level File Format
+---------------
+The level file is an ASCII text file. The following table documents the
+format of the file.
+
++--------------+-----------------+-------------------------------------+
+| Line #       | Name            | Description                         |
++--------------+-----------------+-------------------------------------+
+| 0            | Player Position | Player X and Y position separated   |
+|              | (x, y)          | whitespace                          |
++--------------+-----------------+-------------------------------------+
+| 1            | numCharPoses    | Number of sets of character poses   |
+|              |                 | to load (first set is player's)     |
++--------------+-----------------+-------------------------------------+
+| 2            | numPoses        | Number of poses in the current      |
+|              |                 | character poses set                 |
++--------------+-----------------+-------------------------------------+
+| 3            | pose            | Each line is read as a file path to |
+| ..           |                 | the respective pose image file. The |
+| numPoses     |                 | first pose is the standing pose.    |
+|              |                 | The remaining poses will play       |
+|              |                 | sequentually and for an equal       |
+|              |                 | number of frames within a second    |
+|              |                 | when the character walks.           |
++--------------+-----------------+-------------------------------------+
+| ..           | ^^^             | numPoses line and respective poses  |
+| charPosesSet |                 | are given for the respective        |
+|              |                 | character set until all sets,       |
+|              |                 | specified by numCharPoses, are      |
+|              |                 | given                               |
++--------------+-----------------+-------------------------------------+
+| charPosesSet | numWeapons      | Number of weapons                   |
+| + 1          |                 |                                     |
++--------------+-----------------+-------------------------------------+
+| ..           | weapon          | Each line is read as a file path to |
+| numWeapons   |                 | the respective weapon image file.   |
++--------------+-----------------+-------------------------------------+
+| numWeapons   | numTracers      | Number of weapon tracers            |
+| + 1          |                 |                                     |
++--------------+-----------------+-------------------------------------+
+| ..           | tracer          | Each line is read as a file path to |
+| numTracers   |                 | the respective tracer image file.   |
++--------------+-----------------+-------------------------------------+
+| numTracers   | reticle         | File path to player reticle image   |
+| + 1          |                 | file                                |
++--------------+-----------------+-------------------------------------+
+| reticle + 1  | numEnemies      | Number of enemies on level          |
++--------------+-----------------+-------------------------------------+
+| ..           | enemy           | Each line holds the configuration   |
+| numEnemies   |                 | for a single enemy. Each setting is |
+|              |                 | separated by whitespace are read in |
+|              |                 | the following order: x position, y  |
+|              |                 | y position, pose set id, weapon id, |
+|              |                 | and tracer id. The id values refer  |
+|              |                 | to the respective sets and images   |
+|              |                 | files specified earlier in the file |
+|              |                 | and are ordered starting at 0 for   |
+|              |                 | the respective group to which they  |
+|              |                 | belong                              |
++--------------+-----------------+-------------------------------------+
+| numEnemies   | background      | File path to level background image |
+| + 1          |                 | file                                |
++--------------+-----------------+-------------------------------------+
+| background   | numTiles        | Number of unique tiles followed by  |
+| + 1          | solidTiles      | the respective unique tile id of    |
+|              |                 | the first solid tile (all unique    |
+|              |                 | tiles after will also be solid).    |
+|              |                 | The two values are separated by     |
+|              |                 | whitespace.                         |
++--------------+-----------------+-------------------------------------+
+| ..           | tile            | Each line is read as a file path to |
+| numTiles     |                 | the respective tile image file.     |
++--------------+-----------------+-------------------------------------+
+| numTiles + 1 | Level width and | Width and height of the level in    |
+|              | height          | units of tiles. The two values are  |
+|              |                 | separated by whitespace.            |
++--------------+-----------------+-------------------------------------+
+| Level width  | Tile map        | Each line is read as a position map |
+| and height   |                 | of tiles. Tile ids are given        |
+| + 1          |                 | separated by whitespace. Each line  |
+|              |                 | has level width number of tiles. A  |
+|              |                 | tile id of 0 indicates an empty     |
+|              |                 | space on the map.                   |
++--------------+-----------------+-------------------------------------+
+| Level height | Game Over       | File path to level game over image  |
+| + 1          |                 | file                                |
++--------------+-----------------+-------------------------------------+
+
+Note: the logical game resolution is 640x480 pixels; sprite/tile images
+are expected to have a 32x32 pixel dimension.
+
 Licensing
 ---------
 
