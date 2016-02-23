@@ -33,6 +33,7 @@ int main(){
 		World world(mapFilePath);
 
 		Uint32 lastFrame = 0;
+		unsigned gameOver = 0;
 		while(true){
 			Uint32 currFrame = SDL_GetTicks();
 			const unsigned fps = 60;
@@ -40,8 +41,12 @@ int main(){
 			if(currFrame - lastFrame > millisecondsPerFrame){
 				lastFrame = currFrame;
 
-				if(world.tick(fps)){
-					break;
+				if(gameOver){
+					if(world.gameOver()){
+						break;
+					}
+				}else if(world.tick(fps)){
+					gameOver = 1;
 				}
 			}
 		}

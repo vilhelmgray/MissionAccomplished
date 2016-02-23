@@ -74,6 +74,27 @@ void World::draw(){
 	SDL_RenderPresent(windrend.renderer);
 }
 
+bool World::gameOver(){
+	if(SDL_RenderClear(windrend.renderer) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+
+	if(SDL_RenderCopy(windrend.renderer, gameOverScreen->texture, NULL, NULL) < 0){
+		throw std::runtime_error(SDL_GetError());
+	}
+
+	SDL_RenderPresent(windrend.renderer);
+
+	SDL_Event event;
+	while(SDL_PollEvent(&event)){
+		if(event.type == SDL_QUIT || (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)){
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool World::handleEvents(){
 	SDL_Event event;
 	while(SDL_PollEvent(&event)){
@@ -203,6 +224,10 @@ void World::loadFiles(const std::string& mapFilePath){
 			}
 		}
 	}
+
+	std::string gameOverFilePath;
+	mapFile >> gameOverFilePath;
+	gameOverScreen = std::unique_ptr<Texture>(new Texture(windrend.renderer, gameOverFilePath.c_str()));
 }
 
 bool World::tick(const unsigned fps){
@@ -211,7 +236,9 @@ bool World::tick(const unsigned fps){
 	}
 
 	std::list<std::shared_ptr<Character>> ticked_enemies(enemies.begin(), enemies.end());
-	player->tick(tiles, fps, camera, nullptr, ticked_enemies);
+	if(player->tick(tiles, fps, camera, nullptr, ticked_enemies)){
+		return true;
+	}
 
 	std::list<std::shared_ptr<Character>> ticked_player{player};
 	for(auto enemy = enemies.begin(); enemy != enemies.end(); enemy++){
@@ -219,6 +246,9 @@ bool World::tick(const unsigned fps){
 			enemy = enemies.erase(enemy);
 			enemy--;
 		}
+	}
+	if(enemies.empty()){
+		return true;
 	}
 
 	draw();

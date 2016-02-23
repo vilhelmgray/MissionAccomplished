@@ -43,6 +43,7 @@ class World{
 
 		std::unique_ptr<Texture> background;
 		std::vector<std::shared_ptr<Texture>> tile_textures;
+		std::unique_ptr<Texture> gameOverScreen;
 
 		std::vector<std::unique_ptr<Entity>> tiles;
 
@@ -53,6 +54,7 @@ class World{
 	public:
 		World(const std::string& mapFilePath);
 
+		bool gameOver();
 		bool tick(const unsigned fps);
 };
 

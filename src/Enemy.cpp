@@ -31,7 +31,9 @@
 Enemy::Enemy(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses, std::shared_ptr<Texture> weapon, std::shared_ptr<Texture> tracer) : Character(x, y, poses, weapon, tracer), rng(std::chrono::system_clock::now().time_since_epoch().count()), dis(0, 359) {}
 
 bool Enemy::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies){
-	Character::tick(tiles, fps, camera, reticle, enemies);
+	if(Character::tick(tiles, fps, camera, reticle, enemies)){
+		return true;
+	}
 
 	unsigned action = dis(rng);
 	if(action < 9){
@@ -47,4 +49,6 @@ bool Enemy::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps
 	}else{
 		vel.x = 60;
 	}
+
+	return false;
 }
