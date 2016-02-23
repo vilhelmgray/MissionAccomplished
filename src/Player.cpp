@@ -47,10 +47,10 @@ void Player::evaluate_event(const SDL_Event *const event){
 						this->jump();
 						break;
 					case SDLK_a:
-						vel.x = -60;
+						acc.x = -100;
 						break;
 					case SDLK_d:
-						vel.x = 60;
+						acc.x = 100;
 						break;
 				}
 			}
@@ -59,7 +59,7 @@ void Player::evaluate_event(const SDL_Event *const event){
 			switch(event->key.keysym.sym){
 				case SDLK_a:
 				case SDLK_d:
-					vel.x = 0;
+					acc.x = 0;
 					break;
 			}
 			break;

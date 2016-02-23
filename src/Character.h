@@ -43,7 +43,7 @@ class Character: public Entity{
 		struct{
 			double x;
 			double y;
-		} vel, pos;
+		} acc, vel, pos;
 
 		unsigned hp;
 		unsigned falling;

@@ -43,11 +43,11 @@ bool Enemy::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps
 	}else if(action < 54){
 		weapon->point(dis(rng));
 	}else if(action < 180){
-		vel.x = 0;
+		acc.x = 0;
 	}else if(action < 270){
-		vel.x = -60;
+		acc.x = -100;
 	}else{
-		vel.x = 60;
+		acc.x = 100;
 	}
 
 	return false;

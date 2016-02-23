@@ -30,7 +30,7 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), vel(), hp(100), falling(1) {
+Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), acc{0, 300}, vel(), hp(100), falling(1) {
 	pos.x = position.x;
 	pos.y = position.y;
 
@@ -67,7 +67,7 @@ void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 
 void Character::jump(){
 	if(!falling){
-		vel.y = -160;
+		vel.y = -acc.y;
 		falling = 1;
 	}
 }
@@ -77,13 +77,29 @@ bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		return true;
 	}
 
-	if(vel.x){
+	if(acc.x > 0){
 		face = 0;
-	}else if(vel.x < 0){
+	}else if(acc.x < 0){
 		face = 1;
 	}
 
-	vel.y += 160 / fps;
+	vel.y += acc.y / fps;
+	if(!falling){
+		if(acc.x){
+			const double new_vel_x = vel.x + acc.x / fps;
+			if(acc.x > 0){
+				vel.x = (new_vel_x > 100) ? 100 : new_vel_x;
+			}else if(acc.x < 0){
+				vel.x = (new_vel_x < -100) ? -100 : new_vel_x;
+			}
+		}else if(vel.x > 0){
+			const double delta_x = 300.0 / fps;
+			vel.x = (vel.x > delta_x) ? vel.x - delta_x : 0;
+		}else if(vel.x < 0){
+			const double delta_x = 300.0 / fps;
+			vel.x = (vel.x < -delta_x) ? vel.x + delta_x : 0;
+		}
+	}
 
 	pos.x += vel.x / fps;
 	pos.y += vel.y / fps;
@@ -94,6 +110,7 @@ bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		SDL_Rect collisionArea;
 		if(tile->collision(&attempt, &collisionArea)){
 			attempt.x = pos.x -= (vel.x > 0 ? 1 : -1) * collisionArea.w;
+			vel.x = 0;
 		}
 
 		attempt.y = pos.y;
@@ -108,8 +125,10 @@ bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 	const int max_x = camera.max_x + camera.aperture.w - 32;
 	if(x_bound_check < 0){
 		pos.x = 0;
+		vel.x = 0;
 	}else if(x_bound_check > max_x){
 		pos.x = max_x;
+		vel.x = 0;
 	}
 
 	position.x = pos.x;
