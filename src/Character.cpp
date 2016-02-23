@@ -30,7 +30,7 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), vel(), hp(100) {
+Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), vel(), hp(100), falling(1) {
 	pos.x = position.x;
 	pos.y = position.y;
 
@@ -51,6 +51,13 @@ void Character::draw(SDL_Renderer *const rend, const SDL_Rect *const aperture){
 
 	Entity::draw(rend, aperture);
 	weapon->draw(rend, aperture);
+}
+
+void Character::jump(){
+	if(!falling){
+		vel.y = -160;
+		falling = 1;
+	}
 }
 
 bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies){
@@ -81,6 +88,7 @@ bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 		if(tile->collision(&attempt, &collisionArea)){
 			pos.y -= (vel.y > 0 ? 1 : -1) * collisionArea.h;
 			vel.y = 0;
+			falling = 0;
 		}
 	}
 

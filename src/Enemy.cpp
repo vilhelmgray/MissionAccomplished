@@ -35,7 +35,7 @@ bool Enemy::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps
 
 	unsigned action = dis(rng);
 	if(action < 9){
-		vel.y = -160;
+		this->jump();
 	}else if(action < 18){
 		weapon->fire();
 	}else if(action < 54){

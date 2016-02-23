@@ -46,12 +46,14 @@ class Character: public Entity{
 		} vel, pos;
 
 		unsigned hp;
+		unsigned falling;
 
 	public:
 		Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture);
 
 		bool collision(const SDL_Rect *const agent, SDL_Rect *const collisionArea);
 		virtual void draw(SDL_Renderer *const rend, const SDL_Rect *const aperture);
+		void jump();
 		virtual bool tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned fps, Camera& camera, std::shared_ptr<Reticle> reticle, std::list<std::shared_ptr<Character>>& enemies);
 };
 

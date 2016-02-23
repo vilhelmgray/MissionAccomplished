@@ -44,7 +44,7 @@ void Player::evaluate_event(const SDL_Event *const event){
 			if(!event->key.repeat){
 				switch(event->key.keysym.sym){
 					case SDLK_SPACE:
-						vel.y = -160;
+						this->jump();
 						break;
 					case SDLK_a:
 						vel.x = -60;
