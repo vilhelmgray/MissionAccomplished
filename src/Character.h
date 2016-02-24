@@ -45,6 +45,7 @@ class Character: public Entity{
 			double y;
 		} acc, vel, pos;
 
+		unsigned framesElapsed;
 		unsigned hp;
 		unsigned falling;
 

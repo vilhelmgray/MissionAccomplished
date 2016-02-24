@@ -30,7 +30,7 @@
 
 #include "Character.h"
 
-Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), acc{0, 300}, vel(), hp(100), falling(1) {
+Character::Character(const unsigned x, const unsigned y, std::vector<std::shared_ptr<Texture>> poses_textures, std::shared_ptr<Texture> weapon_texture, std::shared_ptr<Texture> tracer_texture) : Entity(x, y, poses_textures[0], 0, 1), pose(), poses(poses_textures), acc{0, 300}, vel(), framesElapsed(), hp(100), falling(1) {
 	pos.x = position.x;
 	pos.y = position.y;
 
@@ -134,7 +134,6 @@ bool Character::tick(std::vector<std::unique_ptr<Entity>>& tiles, const unsigned
 	position.x = pos.x;
 	position.y = pos.y;
 
-	static unsigned framesElapsed = 0;
 	if(vel.x){
 		const unsigned numWalkPoses = poses.size() - 1;
 		const unsigned walkPosePersistance = fps / numWalkPoses;
