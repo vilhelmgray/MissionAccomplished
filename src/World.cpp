@@ -135,6 +135,9 @@ void World::loadFiles(const std::string& mapFilePath){
 	std::getline(mapFile, buffer);
 	unsigned numCharacterPoses;
 	std::istringstream(buffer) >> numCharacterPoses;
+	if(!numCharacterPoses){
+		throw std::runtime_error("Number of character poses sets must be greater than 0");
+	}
 	ImageSystem imgsys;
 	std::vector<std::vector<std::shared_ptr<Texture>>> characterPoses;
 	for(unsigned i = 0; i < numCharacterPoses; i++){
@@ -143,6 +146,9 @@ void World::loadFiles(const std::string& mapFilePath){
 		std::getline(mapFile, buffer);
 		unsigned numPoses;
 		std::istringstream(buffer) >> numPoses;
+		if(numPoses < 2){
+			throw std::runtime_error("Number of poses in a set must be greater than 1");
+		}
 		for(unsigned j = 0; j < numPoses; j++){
 			std::string poseFilePath;
 			std::getline(mapFile, poseFilePath);
@@ -156,6 +162,9 @@ void World::loadFiles(const std::string& mapFilePath){
 	std::getline(mapFile, buffer);
 	unsigned numWeapons;
 	std::istringstream(buffer) >> numWeapons;
+	if(!numWeapons){
+		throw std::runtime_error("Number of weapons must be greater than 0");
+	}
 	std::vector<std::shared_ptr<Texture>> weapons;
 	for(unsigned i = 0; i < numWeapons; i++){
 		std::string weaponFilePath;
@@ -167,6 +176,9 @@ void World::loadFiles(const std::string& mapFilePath){
 	std::getline(mapFile, buffer);
 	unsigned numTracers;
 	std::istringstream(buffer) >> numTracers;
+	if(!numTracers){
+		throw std::runtime_error("Number of tracers must be greater than 0");
+	}
 	std::vector<std::shared_ptr<Texture>> tracers;
 	for(unsigned i = 0; i < numTracers; i++){
 		std::string tracerFilePath;
@@ -184,12 +196,19 @@ void World::loadFiles(const std::string& mapFilePath){
 	std::getline(mapFile, buffer);
 	unsigned numEnemies;
 	std::istringstream(buffer) >> numEnemies;
+	if(!numEnemies){
+		throw std::runtime_error("Number of enemies must be greater than 0");
+	}
 	for(unsigned i = 0; i < numEnemies; i++){
 		std::getline(mapFile, buffer);
 		unsigned poses;
 		unsigned weapon;
 		unsigned tracer;
 		std::istringstream(buffer) >> x >> y >> poses >> weapon >> tracer;
+
+		poses = (poses >= characterPoses.size()) ? 0 : poses;
+		weapon = (weapon >= weapons.size()) ? 0 : weapon;
+		tracer = (tracer >= tracers.size()) ? 0 : tracer;
 
 		enemies.emplace_back(new Enemy(x, y, characterPoses[poses], weapons[weapon], tracers[tracer]));
 	}
@@ -224,7 +243,7 @@ void World::loadFiles(const std::string& mapFilePath){
 		for(x = 0; x < width; x++){
 			unsigned id;
 			iss >> id;
-			if(id){
+			if(id && id <= tile_textures.size()){
 				tiles.emplace_back(new Entity(x*32, y*32, tile_textures[id-1], 0, id >= solidTiles));
 			}
 		}
